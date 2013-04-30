@@ -21,3 +21,5 @@ import bottle
 def site_index():
 
 	return "Hello World"
+
+bottle.run(host='leveling.rstnt.com', port=80)
