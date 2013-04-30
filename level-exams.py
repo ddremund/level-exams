@@ -49,8 +49,8 @@ def create_test(test_id):
 
 	for category in categories.keys():
 		print "Category:", category
-		print "Level questions:", int(math.ceil(pct_top / 100 * categories[category]))
-		print "Level - 1 questions:", int(math.ceil((1 - pct_top / 100) * categories[category]))
+		print "Level questions:", pct_top / 100 * categories[category]#int(math.ceil(pct_top / 100 * categories[category]))
+		print "Level - 1 questions:", (1 - pct_top / 100) * categories[category]#int(math.ceil((1 - pct_top / 100) * categories[category]))
 		cat_questions = questions.get_questions(category, level, 
 							int(math.ceil(pct_top / 100 * categories[category])))
 		cat_questions.extend(questions.get_questions(category, level - 1, 
