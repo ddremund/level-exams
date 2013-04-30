@@ -42,7 +42,7 @@ class TestTypeDAO:
 			results.append({"_id": test_type["_id"],
 							"name": test_type["name"],
 							"category_counts": test_type["category_counts"],
-							"pct_top_level" = test_type["pct_top_level"]})
+							"pct_top_level": test_type["pct_top_level"]})
 		return results
 
 	def get_test_type(self, type_id):
