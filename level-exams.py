@@ -33,9 +33,12 @@ def site_index():
 @bottle.route('/test/<test_id>')
 def create_test():
 	username = 'Derek'
+	test_type = test_types.get_test_type(cgi.escape(test_id))
+
+	test_questions = {}
 
 	return bottle.template('test_template', dict(username = username, 
-		test_type = test_types.get_test_type(cgi.escape(test_id)))
+		questions = questions)
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
