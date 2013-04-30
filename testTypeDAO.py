@@ -39,5 +39,6 @@ class TestTypeDAO:
 		results = []
 		cursor = self.test_types.find()
 		for test_type in cursor:
-			results.append({"name": test_type["name"]})
+			results.append({"_id": test_type["_id"],
+							"name": test_type["name"]})
 		return results
