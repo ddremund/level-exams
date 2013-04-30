@@ -21,7 +21,7 @@ class QuestionDAO:
 	def __init__(self, database):
 
 		self.db = database
-		self.questions = db.questions
+		self.questions = database.questions
 
 	def insert_question(self, topic, question, answer, levels_array):
 
