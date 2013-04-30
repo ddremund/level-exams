@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import sys
-from bson.json_util import dumps
 
 class QuestionDAO:
 
