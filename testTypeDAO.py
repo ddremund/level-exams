@@ -44,3 +44,7 @@ class TestTypeDAO:
 							"category_counts": test_type["category_counts"],
 							"pct_top_level" = test_type["pct_top_level"]})
 		return results
+
+	def get_test_type(self, type_id):
+
+		return self.test_types.find_one({'_id': type_id})

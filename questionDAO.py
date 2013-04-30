@@ -44,12 +44,13 @@ class QuestionDAO:
 		else:
 			cursor = self.questions.find().limit(num_questions)
 
-		results = []
+		return list(cursor)
+		#results = []
 
-		for question in cursor:
-			results.append({"topic": question["topic"],
-							"question": question["question"],
-							"answer": question["answer"],
-							"levels": question["levels"]})
+		# for question in cursor:
+		# 	results.append({"topic": question["topic"],
+		# 					"question": question["question"],
+		# 					"answer": question["answer"],
+		# 					"levels": question["levels"]})
 
-		return results
+		#return results

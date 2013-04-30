@@ -23,9 +23,20 @@ import json
 @bottle.route('/')
 def site_index():
 
-	return bottle.template('main_template', dict(username = "Derek", 
-		test_types = test_types.get_test_types()))
-	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
+	username = 'Derek'
+
+	#return bottle.template('main_template', dict(username = "Derek", 
+	#	test_types = test_types.get_test_types()))
+	return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
+
+@bottle.route('/test/<test_id>')
+
+	username = 'Derek'
+
+	return bottle.template('test_template', dict(username = username, 
+		test_type = ))
+
+def create_test():
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
