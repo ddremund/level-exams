@@ -14,24 +14,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pymongo
-import bottle
-import questionDAO
-import testTypeDAO
-import json
+import sys
 
-@bottle.route('/')
-def site_index():
+class TestTypeDAO:
 
-	return bottle.template('main_template', dict(username = "Derek", test_types = test_types.get_test_types()))
-	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
+	def __init__(self, database):
 
-connection_string = "mongodb://localhost"
-connection = pymongo.MongoClient(connection_string)
+		self.db = database
+		self.test_types = database.test_types
 
-database = connection.testing
+	def insert_test_type(self, name):
 
-questions = questionDAO.QuestionDAO(database)
-test_types = testTypeDAO.TestTypeDAO(database)
+		print "Inserting Test Type", name
 
-bottle.run(host='leveling.rstnt.com', port=80)
+		test_type = {"name": name}
+
+		try:
+			self.test_types.insert(test_type)
+		except Exception, e:
+			print "Error inserting post:", e
+
+	def get_test_types(self):
+
+		results = []
+		cursor = self.test_types.find()
+		for test_type in cursor:
+			results.append({"name": test_type["name"]})
+		return results
