@@ -20,7 +20,7 @@ Total Questions: {{sum(len(q) for q in questions.values())}}
 <h3>{{section}}</h3>
 <ol>
 	%for question in questions[section]:
-	<li>Q: {{question['question']}}<br />A: {{question['answer'}}</li>
+	<li>Q: {{question['question']}}<br />A: {{question['answer']}}</li>
 	%end
 </ol>
 %end
