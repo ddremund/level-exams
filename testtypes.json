@@ -1,4 +1,4 @@
 {"_id": 0, "name": "Non-SA to Level 1"}
-{"_id": 0, "name": "Level 1 to Level 2"}
-{"_id": 0, "name": "Level 2 to Level 3"}
-{"_id": 0, "name": "All Questions"}
+{"_id": 1, "name": "Level 1 to Level 2"}
+{"_id": 2, "name": "Level 2 to Level 3"}
+{"_id": 3, "name": "All Questions"}
