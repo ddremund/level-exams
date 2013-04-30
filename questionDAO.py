@@ -40,8 +40,8 @@ class QuestionDAO:
 	def get_questions(self, category, level, num_questions = 0):
 
 		if num_questions == 0:
-			cursor = self.questions.find()
+			cursor = self.questions.find({"category": category, "level": level})
 		else:
-			cursor = self.questions.find().limit(num_questions)
+			cursor = self.questions.find({"category": category, "level": level}).limit(num_questions)
 
 		return list(cursor)
