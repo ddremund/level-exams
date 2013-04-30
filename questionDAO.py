@@ -42,6 +42,7 @@ class QuestionDAO:
 		if num_questions == 0:
 			cursor = self.questions.find({"topic": topic, "level": level})
 		else:
-			cursor = self.questions.find({"topic": topic, "level": level}).limit(num_questions)
+			#cursor = self.questions.find({"topic": topic, "level": level}).limit(num_questions)
+			cursor = self.questions.find().limit(num_questions)
 
 		return list(cursor)
