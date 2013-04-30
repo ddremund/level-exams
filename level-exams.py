@@ -50,9 +50,10 @@ def create_test(test_id):
 
 	for category in categories.keys():
 		cat_questions = questions.get_questions(category, level, 
-							int(math.ceil(pct_top / 100.0 * categories[category])))
-		cat_questions.extend(questions.get_questions(category, level - 1, 
-								int(math.ceil((1 - pct_top / 100.0) * categories[category]))))
+						int(math.ceil(pct_top / 100.0 * categories[category])))
+		if level > 1
+			cat_questions.extend(questions.get_questions(category, level - 1, 
+				int(math.ceil((1 - pct_top / 100.0) * categories[category]))))
 		test_questions[category] = cat_questions
 
 		print category, len(cat_questions)
