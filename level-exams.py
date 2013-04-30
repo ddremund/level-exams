@@ -19,22 +19,23 @@ import bottle
 import questionDAO
 import testTypeDAO
 import json
+import cgi
 
 @bottle.route('/')
 def site_index():
 
 	username = 'Derek'
 
-	#return bottle.template('main_template', dict(username = "Derek", 
-	#	test_types = test_types.get_test_types()))
-	return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
+	return bottle.template('main_template', dict(username = "Derek", 
+		test_types = test_types.get_test_types()))
+	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
 
 @bottle.route('/test/<test_id>')
 def create_test():
 	username = 'Derek'
 
-	#return bottle.template('test_template', dict(username = username, 
-	#	test_type = ))
+	return bottle.template('test_template', dict(username = username, 
+		test_type = test_types.get_test_type(cgi.escape(test_id)))
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
