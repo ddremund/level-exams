@@ -21,7 +21,7 @@ import questionDAO
 @bottle.route('/')
 def site_index():
 
-	return '\n'.join(questions.get_questions("", "1"))
+	return "\n".join(item for item in questions.get_questions("", "1"))
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)

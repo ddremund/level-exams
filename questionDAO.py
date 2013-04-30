@@ -41,9 +41,16 @@ class QuestionDAO:
 	def get_questions(self, category, level, num_questions = 0):
 
 		if num_questions == 0:
-			result = self.questions.find()
+			cursor = self.questions.find()
 		else:
-			result = self.questions.find().limit(num_questions)
+			cursor = self.questions.find().limit(num_questions)
 
-		#return dumps(result)
-		return result
+		results = []
+
+		for question in cursor:
+			results.append({"topic": question["topic"],
+							"question": question["question"],
+							"answer": question["answer"],
+							"levels": question["levels"]})
+
+		returl results
