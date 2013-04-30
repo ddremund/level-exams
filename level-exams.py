@@ -17,12 +17,11 @@
 import pymongo
 import bottle
 import questionDAO
-import json
 
 @bottle.route('/')
 def site_index():
 
-	return json.dumps(questions.get_questions("", "1"))
+	return questions.get_questions("", "1")
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)

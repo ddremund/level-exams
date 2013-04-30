@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import sys
+from bson.json_util import dumps
 
 class QuestionDAO:
 
@@ -44,4 +45,4 @@ class QuestionDAO:
 		else:
 			result = self.questions.find().limit(num_questions)
 
-		return result
+		return dumps(result)
