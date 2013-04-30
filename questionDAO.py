@@ -53,4 +53,4 @@ class QuestionDAO:
 							"answer": question["answer"],
 							"levels": question["levels"]})
 
-		returl results
+		return results
