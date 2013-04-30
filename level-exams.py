@@ -16,10 +16,18 @@
 
 import pymongo
 import bottle
+import questionDAO
 
 @bottle.route('/')
 def site_index():
 
-	return "Hello World"
+	return questions.get_questions("", "1")
+
+connection_string = "mongodb://localhost"
+connection = pymongo.MongoClient(connection_string)
+
+database = connection.testing
+
+questions = questionDAO.QuestionDAO(database)
 
 bottle.run(host='leveling.rstnt.com', port=80)
