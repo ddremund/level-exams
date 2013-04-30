@@ -37,6 +37,9 @@ def create_test():
 
 	test_questions = {}
 
+	for category in test_type['category_counts']:
+		
+
 	return bottle.template('test_template', dict(username = username, 
 		questions = questions)
 
