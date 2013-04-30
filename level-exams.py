@@ -33,8 +33,8 @@ def site_index():
 
 	username = 'Derek'
 
-	return bottle.template('test_template', dict(username = username, 
-		test_type = ))
+	#return bottle.template('test_template', dict(username = username, 
+	#	test_type = ))
 
 def create_test():
 
