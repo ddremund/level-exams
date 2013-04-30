@@ -13,7 +13,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 <h1>Enterprise Windows Leveling Test</h1><br />
 Test Description: {{description}}<br />
-Total Questions: {{sum(len(q) for q in questions)}}
+Total Questions: {{sum(len(q) for q in questions.values())}}
 
 
 </body>

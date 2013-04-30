@@ -37,6 +37,7 @@ def create_test(test_id):
 	username = 'Derek'
 	test_type = test_types.get_test_type(cgi.escape(test_id))
 
+	print "Generating test..."
 	print "Test ID:", test_id
 	print "Type:", test_type
 
@@ -53,6 +54,7 @@ def create_test(test_id):
 		cat_questions.extend(questions.get_questions(category, level - 1, 
 								int(math.ceil((1 - pct_top / 100.0) * categories[category]))))
 		test_questions[category] = cat_questions
+
 		print category, len(cat_questions)
 
 
