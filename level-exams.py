@@ -53,6 +53,7 @@ def create_test(test_id):
 		cat_questions.extend(questions.get_questions(category, level - 1, 
 								int(math.ceil((1 - pct_top / 100.0) * categories[category]))))
 		test_questions[category] = cat_questions
+		print category, len(cat_questions)
 
 
 	return bottle.template('test_template', dict(username = username, 
