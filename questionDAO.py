@@ -39,9 +39,9 @@ class QuestionDAO:
 
 	def get_questions(self, category, level, num_questions = 0):
 
-		if(num_questions = 0)
+		if num_questions == 0:
 			result = self.questions.find()
-		else
+		else:
 			result = self.questions.find().limit(num_questions)
 
 		return result
