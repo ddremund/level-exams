@@ -1,4 +1,36 @@
-{"_id": 0, "name": "Non-SA to Level 1"}
-{"_id": 1, "name": "Level 1 to Level 2"}
-{"_id": 2, "name": "Level 2 to Level 3"}
-{"_id": 3, "name": "All Questions"}
+{"_id": 0, "name": "Non-SA to Level 1"
+"category_counts": 
+{"Managed Virtualization": 1,
+"Cloud": 1,
+"RackConnect": 0,
+"Storge": 4,
+"DNS": 3,
+"Networking" 3,
+"IIS": 6,
+"SQL": 5,
+"Clustering": 0,
+"Active Directory": 1}}
+{"_id": 1, "name": "Level 1 to Level 2", 
+"category_counts": 
+{"Managed Virtualization": 2,
+"Cloud": 5,
+"RackConnect": 2,
+"Storge": 5,
+"DNS": 5,
+"Networking" 3,
+"IIS": 10,
+"SQL": 10,
+"Clustering": 1,
+"Active Directory": 8}}
+{"_id": 2, "name": "Level 2 to Level 3",
+"category_counts": 
+{"Managed Virtualization": 3,
+"Cloud": 5,
+"RackConnect": 5,
+"Storge": 5,
+"DNS": 5,
+"Networking" 5,
+"IIS": 15,
+"SQL": 15,
+"Clustering": 5,
+"Active Directory": 10}}

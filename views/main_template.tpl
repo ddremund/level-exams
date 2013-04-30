@@ -19,6 +19,7 @@ Generate Test:<br />
 <li><a href="/test/{{test['_id']}}">{{test['name']}}</a></li>
 %end
 <li><a href="/test/custom">Custom Test</li>
+<li><a href="/test/all">All Questions</li>
 </ul>
 
 </body>
