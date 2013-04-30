@@ -32,10 +32,13 @@ def site_index():
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
+	
 	username = 'Derek'
 	test_type = test_types.get_test_type(cgi.escape(test_id))
+
 	print "Test ID:", test_id
 	print "Type:", test_type
+
 	test_questions = {}
 
 	description = test_type['name']
