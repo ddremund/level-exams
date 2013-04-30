@@ -49,10 +49,10 @@ def create_test(test_id):
 	topics = test_type['topic_counts']
 
 	for topic in topics.keys():
-		topic_questions = questions.get_questions(category, level, 
+		topic_questions = questions.get_questions(topic, level, 
 						int(math.ceil(pct_top / 100.0 * topics[topic])))
 		if level > 1:
-			cat_questions.extend(questions.get_questions(category, level - 1, 
+			cat_questions.extend(questions.get_questions(topic, level - 1, 
 				int(math.ceil((1 - pct_top / 100.0) * topics[topic]))))
 		test_questions[topic] = topic_questions
 
