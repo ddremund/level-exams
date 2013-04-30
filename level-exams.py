@@ -37,11 +37,22 @@ def create_test():
 
 	test_questions = {}
 
-	for category in test_type['category_counts']:
-		
+	description = test_type['name']
+	level = test_type['dest_level']
+	pct_top = test_type['pct_top_level']
+	categories = test_type['category_counts']
+
+	for category in categories.keys():
+		cat_questions = questions.get_questions(category, level, 
+							int(math.ceil(pct_top / 100 * categories[category])))
+		cat_questions.extend(questions.get_questions(category, level - 1, 
+								int(math.ceil((1 - pct_top / 100)) * categories[category])))
+		test_questions[category] = cat_questions
+
 
 	return bottle.template('test_template', dict(username = username, 
-		questions = questions)
+		description = description, pct_top = pct_top, 
+		questions = test_questions))
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)

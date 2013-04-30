@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leveling</title>
+<title>Enterprise Windows Leveling</title>
 </head>
 <body>
 
@@ -11,7 +11,7 @@
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
 
-<h1>Enterprise Leveling Test Generator</h1>
+<h1>Enterprise Windows Leveling Test Generator</h1>
 
 Generate Test:<br />
 <ul>

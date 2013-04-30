@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leveling</title>
+<title>Leveling Test: {{description}}</title>
 </head>
 <body>
 
@@ -11,16 +11,10 @@
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
 
-<h1>Enterprise Leveling Test Generator</h1>
+<h1>Enterprise Windows Leveling Test</h1><br />
+Test Description: {{description}}<br />
+Total Questions: {{sum(len(q) for q in questions)}}
 
-Generate Test:<br />
-<ul>
-%for test in test_types:
-<li><a href="/test/{{test['_id']}}">{{test['name']}}</a></li>
-%end
-<li><a href="/test/custom">Custom Test</li>
-<li><a href="/test/all">All Questions</li>
-</ul>
 
 </body>
 </html>
