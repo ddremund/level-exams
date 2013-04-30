@@ -41,4 +41,5 @@ class TestTypeDAO:
 
 	def get_test_type(self, type_id):
 
-		return self.test_types.find({'_id': type_id})[0]
+		return self.test_types.find()[0]
+		#return self.test_types.find_one({'_id': type_id})
