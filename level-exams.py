@@ -31,7 +31,7 @@ def site_index():
 	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
 
 @bottle.route('/test/<test_id>')
-def create_test():
+def create_test(test_id):
 	username = 'Derek'
 	test_type = test_types.get_test_type(cgi.escape(test_id))
 
