@@ -45,4 +45,5 @@ class QuestionDAO:
 		else:
 			result = self.questions.find().limit(num_questions)
 
-		return dumps(result)
+		#return dumps(result)
+		return result
