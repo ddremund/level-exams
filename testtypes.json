@@ -1,4 +1,4 @@
-{"_id": 0, "name": "Non-SA to Level 1"
+{"_id": 0, "name": "Non-SA to Level 1", "pct_top_level": 100,
 "category_counts": 
 {"Managed Virtualization": 1,
 "Cloud": 1,
@@ -10,7 +10,7 @@
 "SQL": 5,
 "Clustering": 0,
 "Active Directory": 1}}
-{"_id": 1, "name": "Level 1 to Level 2", 
+{"_id": 1, "name": "Level 1 to Level 2", "pct_top_level": 80,
 "category_counts": 
 {"Managed Virtualization": 2,
 "Cloud": 5,
@@ -22,7 +22,7 @@
 "SQL": 10,
 "Clustering": 1,
 "Active Directory": 8}}
-{"_id": 2, "name": "Level 2 to Level 3",
+{"_id": 2, "name": "Level 2 to Level 3", "pct_top_level": 80,
 "category_counts": 
 {"Managed Virtualization": 3,
 "Cloud": 5,
