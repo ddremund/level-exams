@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import sys
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 
 class TestTypeDAO:
 
@@ -42,4 +42,4 @@ class TestTypeDAO:
 
 	def get_test_type(self, type_id):
 
-		return self.test_types.find_one({u'_id': ObjectId(type_id)})
+		return self.test_types.find_one({'_id': ObjectId(type_id)})

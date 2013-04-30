@@ -20,6 +20,7 @@ import questionDAO
 import testTypeDAO
 import json
 import cgi
+import math
 
 @bottle.route('/')
 def site_index():
@@ -32,7 +33,7 @@ def site_index():
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
-	
+
 	username = 'Derek'
 	test_type = test_types.get_test_type(cgi.escape(test_id))
 
@@ -47,6 +48,9 @@ def create_test(test_id):
 	categories = test_type['category_counts']
 
 	for category in categories.keys():
+		print "Category:", category
+		print "Level questions:", int(math.ceil(pct_top / 100 * categories[category]))
+		print "Level - 1 questions:", int(math.ceil((1 - pct_top / 100)) * categories[category]))
 		cat_questions = questions.get_questions(category, level, 
 							int(math.ceil(pct_top / 100 * categories[category])))
 		cat_questions.extend(questions.get_questions(category, level - 1, 
