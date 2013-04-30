@@ -52,11 +52,11 @@ def create_test(test_id):
 		topic_questions = questions.get_questions(topic, level, 
 						int(math.ceil(pct_top / 100.0 * topics[topic])))
 		if level > 1:
-			cat_questions.extend(questions.get_questions(topic, level - 1, 
+			topic_questions.extend(questions.get_questions(topic, level - 1, 
 				int(math.ceil((1 - pct_top / 100.0) * topics[topic]))))
 		test_questions[topic] = topic_questions
 
-		print category, len(topic_questions)
+		print topic, len(topic_questions)
 
 
 	return bottle.template('test_template', dict(username = username, 
