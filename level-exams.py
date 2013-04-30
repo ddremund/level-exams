@@ -46,17 +46,17 @@ def create_test(test_id):
 	description = test_type['name']
 	level = test_type['dest_level']
 	pct_top = test_type['pct_top_level']
-	categories = test_type['category_counts']
+	topics = test_type['topic_counts']
 
-	for category in categories.keys():
-		cat_questions = questions.get_questions(category, level, 
-						int(math.ceil(pct_top / 100.0 * categories[category])))
+	for topic in topics.keys():
+		topic_questions = questions.get_questions(category, level, 
+						int(math.ceil(pct_top / 100.0 * topics[topic])))
 		if level > 1:
 			cat_questions.extend(questions.get_questions(category, level - 1, 
-				int(math.ceil((1 - pct_top / 100.0) * categories[category]))))
-		test_questions[category] = cat_questions
+				int(math.ceil((1 - pct_top / 100.0) * topics[topic]))))
+		test_questions[topic] = topic_questions
 
-		print category, len(cat_questions)
+		print category, len(topic_questions)
 
 
 	return bottle.template('test_template', dict(username = username, 

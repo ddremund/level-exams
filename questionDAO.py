@@ -37,11 +37,11 @@ class QuestionDAO:
 		except Exception, e:
 			print "Error inserting post:", e
 
-	def get_questions(self, category, level, num_questions = 0):
+	def get_questions(self, topic, level, num_questions = 0):
 
 		if num_questions == 0:
-			cursor = self.questions.find({"category": category, "level": level})
+			cursor = self.questions.find({"topic": topic, "level": level})
 		else:
-			cursor = self.questions.find({"category": category, "level": level}).limit(num_questions)
+			cursor = self.questions.find({"topic": topic, "level": level}).limit(num_questions)
 
 		return list(cursor)
