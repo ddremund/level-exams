@@ -20,7 +20,7 @@ Total Questions: {{sum(len(q) for q in questions.values())}}
 <h3>{{section}} - {{len(questions[section])}} questions</h3>
 <ol>
 	%for question in questions[section]:
-	<li>Q: (Level {{question['level']}}) {{question['question']}}<br />A: {{question['answer']}}</li>
+	<li>Q: (Levels: {{', '.join(question['levels'])}}) {{question['question']}}<br />A: {{question['answer']}}</li>
 	%end
 </ol>
 %end
