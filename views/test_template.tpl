@@ -31,7 +31,11 @@ Candidate Name:<br />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
 	%for question in questions[topic]:
-	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br />Image URL: {{question['image_url']}}<br /><br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
+	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br />
+	%if not question['image_url'] == "":
+	Image URL: {{question['image_url']}}<br />
+	%end
+	<br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
 </ol>
 %end
