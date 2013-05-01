@@ -32,8 +32,8 @@ Candidate Name:<br />
 <ol>
 	%for question in questions[topic]:
 	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br />
-	%if not question['image_url'] == "":
-	Image URL: {{question['image_url']}}<br />
+	%if len(question['image_urls']) > 0:
+	Image URLs: {{', '.join(question['image_urls'])}}<br />
 	%end
 	<br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
