@@ -185,7 +185,7 @@ def get_test_custom():
 	cookie = bottle.request.get_cookie("session")
 	username = sessions.get_username(cookie)
 	if username is None:
-		bottle.redirect("/login").
+		bottle.redirect("/login")
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 
