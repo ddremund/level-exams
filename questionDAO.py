@@ -41,6 +41,18 @@ class QuestionDAO:
 
 		return question_id
 
+	def remove_question(self, question_id):
+
+		print "Removing Question", question_id
+
+		try:
+			removed = self.questions.remove({"_id": ObjectId(question_id)})
+		except Exception, e:
+			print "Error removing question:", e
+			removed = 0
+			
+		return removed
+
 	def update_question(self, question_id, topic, question, answer, levels_array):
 
 		print "Updating question", question_id

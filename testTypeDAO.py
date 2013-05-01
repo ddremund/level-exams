@@ -38,8 +38,20 @@ class TestTypeDAO:
 		except Exception, e:
 			print "Error inserting test type:", e
 			test_id = None
-			
+
 		return test_id
+
+	def remove_test_type(self, type_id):
+
+		print "Removing Test Type", test_id
+
+		try:
+			removed = self.test_types.remove({"_id": ObjectId(type_id)})
+		except Exception, e:
+			print "Error removing test type:", e
+			removed = 0
+			
+		return removed
 
 	def get_test_types(self):
 
