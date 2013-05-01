@@ -43,14 +43,14 @@ class TestTypeDAO:
 
 	def remove_test_type(self, type_id):
 
-		print "Removing Test Type", test_id
+		print "Removing Test Type", type_id
 
 		try:
 			removed = self.test_types.remove({"_id": ObjectId(type_id)})
 		except Exception, e:
 			print "Error removing test type:", e
 			removed = 0
-			
+
 		return removed
 
 	def get_test_types(self):
