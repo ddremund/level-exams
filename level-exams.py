@@ -27,16 +27,19 @@ def site_index():
 
 	username = 'Derek'
 
-	return bottle.template('main_template', dict(username = "Derek", 
+	return bottle.template('main_template', dict(username = username, 
 		test_types = test_types.get_test_types()))
 	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
 
-@bottle.route('/newquestion')
-def create_question():
+@bottle.get('/newquestion')
+def get_newquestion():
 
 	username = 'Derek'
 
-	return bottle.template('new_question', dict(username = "Derek"))
+	return bottle.template('new_question', dict(username = username))
+
+@bottle.post('/newquestion')
+def post_newquestion():	
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
