@@ -22,13 +22,13 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 			%if level == selected_level:
 				<option value="{{level}}" selected>{{level}}</option>
 			%else:
-				<option value="{{level}}">{{level}}></option>
+				<option value="{{level}}">{{level}}</option>
 			%end
 		%end
 	</select>
 	<h2>Description: </h2><input type="text" name="name" />
-	<h2>Percentage of questions to take from level minus one: </h2><input type="text" name="pct_lower_level" />
-	<h2>Question Counts</h2>
+	<h2>Percentage of questions to take from level minus one: </h2><input type="text" name="pct_lower" />
+	<h2>Target Question Counts</h2>
 	<table>
 		%for topic in topics:
 		<tr><td>{{topic}}:</td><td><input type="text" name="{{topic}}"</td></tr>

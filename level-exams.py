@@ -192,6 +192,32 @@ def get_test_custom():
 	return bottle.template("custom_test", dict(username = username, errors = "", 
 		name = "", pct_lower = "", selected_level = "", topics = topics))
 
+@bottle.post('/test/custom')
+def post_test_custom():
+
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
+
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+
+	name = bottle.request.forms.get("name")
+	pct_lower = bottle.request.forms.get("pct_lower")
+	dest_level = bottle.request.forms.get("dest_level")
+
+	if name == "" or pct_lower == "" or dest_level == "":
+		errors = "Custom test must have values for all options."
+		return bottle.template("custom_test", dict(username = username, errors = errors, 
+			name = name, pct_lower = pct_lower, selected_level = dest_level, topics = topics))
+
+	topic_counts = {}
+	for topic in topics:
+		topic_counts[topic] = int(bottle.request.forms.get(topic))
+	
+
+
+
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
 
