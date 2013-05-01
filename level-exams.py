@@ -216,7 +216,7 @@ def post_test_custom():
 		topic_counts[topic] = int(bottle.request.forms.get(topic))
 
 	print "Inserting custom test..."
-	test_id = test_types.insert_test_type(name, dest_level, 100 - int(pct_lower), topic_counts)
+	test_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts)
 
 	bottle.redirect('/test/{}'.format(test_id))
 
