@@ -69,7 +69,7 @@ def post_newquestion():
 	topic = bottle.request.forms.get("topic")
 	new_topic = bottle.request.forms.get("new_topic")
 	levels = bottle.request.forms.getall("level")
-	image_urls = bottle.request.forms.get("image_urls").split[", "]
+	image_urls = bottle.request.forms.get("image_urls").split(", ")
 
 	if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
 		errors = "Question must have question text, answer, topic, and associated levels."
