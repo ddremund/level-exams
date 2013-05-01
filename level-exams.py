@@ -144,6 +144,8 @@ def create_test_all():
 			topic_questions.extend(questions.get_questions(topic, str(level)))
 		test_questions[topic] = {q['_id']:q for q in topic_questions}.values()
 
+		test_questions[topic].sort(key= lambda item: max(item['levels']))
+
 	return bottle.template('test_template', dict(username = username, 
 		description = description, pct_top = pct_top, 
 		questions = test_questions))
@@ -173,6 +175,7 @@ def create_test(test_id):
 			topic_questions.extend(questions.get_questions(topic, str(int(level) - 1), 
 				int(math.ceil((1 - pct_top / 100.0) * topics[topic])), dup_ids))
 		test_questions[topic] = topic_questions
+		test_questions[topic].sort(key= lambda item: max(item['levels']))
 
 		print topic, len(topic_questions)
 
