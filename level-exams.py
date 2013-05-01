@@ -189,7 +189,7 @@ def get_test_custom():
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 
-	return bottle.template("custom_test", dict(username = username, 
+	return bottle.template("custom_test", dict(username = username, errors = "", 
 		name = "", pct_lower = "", selected_level = "", topics = topics))
 
 @bottle.route('/test/<test_id>')
