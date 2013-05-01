@@ -123,7 +123,7 @@ def get_editquestion(question_id):
 	return bottle.template('edit_question', dict(username = username, topics = topics, 
 		question_id = question['_id'], selected_topic = question['topic'], new_topic = "", errors = "", 
 		question = question['question'], answer = question['answer'], levels = question['levels'],
-		image_url = question['image_url']))
+		image_urls = question['image_urls']))
 
 @bottle.post('/question/<question_id>')
 def post_editquestion(question_id):
