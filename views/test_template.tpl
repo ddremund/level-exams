@@ -40,7 +40,7 @@ Images:
 %for topic in questions.keys():
 	%for i, question in enumerate(questions[topic]):
 		%if not question["image_url"] == "":
-			Image for {{topic}} #{{i + 1}}:<br />
+			Image for {{topic}} #{{i + 1}}: {{question["image_url"]}}<br />
 			<img src="{{!question['image_url']}}" /><br />
 		%end
 	%end
