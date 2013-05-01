@@ -189,6 +189,7 @@ def create_test_all():
 		topic_questions = []
 		for level in [1,2,3]:
 			topic_questions.extend(questions.get_questions(topic, str(level)))
+		# uniquify questions
 		test_questions[topic] = {q['_id']:q for q in topic_questions}.values()
 
 		test_questions[topic].sort(key= lambda item: min(item['levels']))
