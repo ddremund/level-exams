@@ -45,9 +45,9 @@ Candidate Name:<br />
 Images:<br /><br />
 %for topic in questions.keys():
 	%for i, question in enumerate(questions[topic]):
-		%if not question["image_url"] == "":
-			Image for {{topic}} question #{{i + 1}}: {{question["image_url"]}}<br /><br />
-			<img src="{{!question['image_url']}}" /><br /><br /><br />
+		%for j, url in enumerate(question["image_urls"]):
+			Image {{j + 1}} for {{topic}} question #{{i + 1}}: {{url}}<br /><br />
+			<img src="{{!url}}" /><br /><br /><br />
 		%end
 	%end
 %end

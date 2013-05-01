@@ -51,7 +51,7 @@ def get_newquestion():
 
 	return bottle.template('new_question', dict(username = username, topics = topics, 
 		selected_topic = "", new_topic = "", errors = "", question = "", 
-		answer = "", levels = [], image_url = ""))
+		answer = "", levels = [], image_urls = []))
 
 @bottle.post('/newquestion')
 def post_newquestion():	
@@ -69,13 +69,13 @@ def post_newquestion():
 	topic = bottle.request.forms.get("topic")
 	new_topic = bottle.request.forms.get("new_topic")
 	levels = bottle.request.forms.getall("level")
-	image_url = bottle.request.forms.get("image_url")
+	image_urls = bottle.request.forms.get("image_urls").split[", "]
 
 	if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
 		errors = "Question must have question text, answer, topic, and associated levels."
 		return bottle.template("new_question", dict(username = username, topics = topics, 
 			selected_topic = topic, new_topic = new_topic, errors = errors, question = question, 
-			answer = answer, levels = levels, image_url = image_url))
+			answer = answer, levels = levels, image_urls = image_urls))
 	
 	escaped_question = question #cgi.escape(question, quote=True)
 	escaped_answer = answer #cgi.escape(answer, quote=True)
@@ -89,13 +89,13 @@ def post_newquestion():
 	print "Question:", escaped_question
 	print "Answer:", escaped_answer
 	print "Levels:", levels
-	print "Image URL:", image_url
+	print "Image URLs:", image_urls
 	questions.insert_question(escaped_topic, escaped_question, escaped_answer, 
-		levels, image_url)
+		levels, image_urls)
 
 	return bottle.template('new_question', dict(username = username, topics = topics, 
 		selected_topic = "", new_topic = "", errors = "Question successfully inserted.", 
-		question = "", answer = "", levels = [], image_url = ""))
+		question = "", answer = "", levels = [], image_urls = []))
 
 @bottle.route('/question/remove/<question_id>')
 def remove_question(question_id):
@@ -140,13 +140,13 @@ def post_editquestion(question_id):
 	topic = bottle.request.forms.get("topic")
 	new_topic = bottle.request.forms.get("new_topic")
 	levels = bottle.request.forms.getall("level")
-	image_url = bottle.request.forms.get("image_url")
+	image_urls = bottle.request.forms.get("image_url").split(", ")
 
 	if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
 		errors = "Question must have question text, answer, topic, and associated levels."
 		return bottle.template("edit_question", dict(username = username, topics = topics, 
 			question_id = question_id, selected_topic = topic, new_topic = new_topic, 
-			errors = errors, question = question, answer = answer, levels = levels, image_url = image_url))
+			errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
 
 	escaped_question = question#cgi.escape(question, quote=True)
 	escaped_answer = answer#cgi.escape(answer, quote=True)
@@ -161,13 +161,13 @@ def post_editquestion(question_id):
 	print "Question:", escaped_question
 	print "Answer:", escaped_answer
 	print "Levels:", levels
-	print "Image URL:", image_url
-	questions.update_question(question_id, escaped_topic, escaped_question, escaped_answer, levels, image_url)
+	print "Image URLs:", image_urls
+	questions.update_question(question_id, escaped_topic, escaped_question, escaped_answer, levels, image_urls)
 
 	errors = "Question successfully updated."
 	return bottle.template("edit_question", dict(username = username, topics = topics, 
 			question_id = question_id, selected_topic = topic, new_topic = new_topic, 
-			errors = errors, question = question, answer = answer, levels = levels, image_url = image_url))
+			errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
 
 @bottle.route('/test/all')
 def create_test_all():

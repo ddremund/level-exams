@@ -24,15 +24,15 @@ class QuestionDAO:
 		self.db = database
 		self.questions = database.questions
 
-	def insert_question(self, topic, question, answer, levels_array, image_url = ""):
+	def insert_question(self, topic, question, answer, levels_array, image_urls = []):
 
-		print "Inserting question", topic, question, answer, levels_array, image_url
+		print "Inserting question", topic, question, answer, levels_array, image_urls
 
 		question = {"topic": topic, 
 					"question": question,
 					"answer": answer,
 					"levels": levels_array,
-					"image_url": image_url}
+					"image_urls": image_urls}
 
 		try:
 			question_id = self.questions.insert(question)
@@ -54,7 +54,7 @@ class QuestionDAO:
 			
 		return removed
 
-	def update_question(self, question_id, topic, question, answer, levels_array, image_url = ""):
+	def update_question(self, question_id, topic, question, answer, levels_array, image_urls = []):
 
 		print "Updating question", question_id
 
@@ -63,7 +63,7 @@ class QuestionDAO:
 					"question": question,
 					"answer": answer,
 					"levels": levels_array,
-					"image_url": image_url}
+					"image_urls": image_urls}
 
 		try:
 			updated = self.questions.update({"_id": ObjectId(question_id)}, question)
