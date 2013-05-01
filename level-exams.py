@@ -31,6 +31,13 @@ def site_index():
 		test_types = test_types.get_test_types()))
 	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
 
+@bottle.route('/newquestion')
+def create_question():
+
+	username = 'Derek'
+
+	return bottle.template('new_question', dict(username = "Derek"))
+
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
 
@@ -49,10 +56,10 @@ def create_test(test_id):
 	topics = test_type['topic_counts']
 
 	for topic in topics.keys():
-		topic_questions = questions.get_questions(topic, level, 
+		topic_questions = questions.get_questions(topic, str(level), 
 						int(math.ceil(pct_top / 100.0 * topics[topic])))
-		if level > 1:
-			topic_questions.extend(questions.get_questions(topic, level - 1, 
+		if int(level) > 1:
+			topic_questions.extend(questions.get_questions(topic, str(int(level) - 1), 
 				int(math.ceil((1 - pct_top / 100.0) * topics[topic]))))
 		test_questions[topic] = topic_questions
 
@@ -71,4 +78,4 @@ database = connection.testing
 questions = questionDAO.QuestionDAO(database)
 test_types = testTypeDAO.TestTypeDAO(database)
 
-bottle.run(host='leveling.rstnt.com', port=80)
+bottle.run(host='localhost', port=80)

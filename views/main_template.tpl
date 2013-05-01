@@ -21,6 +21,8 @@ Generate Test:<br />
 	<li><a href="/test/custom">Custom Test</li>
 	<li><a href="/test/all">All Questions</li>
 </ul>
+<br /><br />
+<a href="/newquestion">Add Question</a>
 
 </body>
 </html>

@@ -12,14 +12,21 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 %end
 
 <h1>Enterprise Windows Leveling Test</h1><br />
-Test Description: {{description}}<br />
-Total Questions: {{sum(len(q) for q in questions.values())}}
+Test Description: {{description}}<br /><br />
 
-%for section in questions.keys():
+<table>
+	<tr align="left"><th>Topic</th><th>Questions</th></tr>
+	%for topic in questions.keys():
+	<tr><td>{{topic}}</td><td>{{len(questions[topic])}}</td></tr>
+	%end
+	<tr><td>Total</td><td>{{sum(len(q) for q in questions.values())}}</td></tr>
+</table>
+
+%for topic in questions.keys():
 <hr />
-<h3>{{section}} - {{len(questions[section])}} questions</h3>
+<h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
-	%for question in questions[section]:
+	%for question in questions[topic]:
 	<li>Q: [Level(s) {{', '.join(question['levels'])}}] {{question['question']}}<br />A: {{question['answer']}}<br />Notes: <br /><br /><br /><br /><br /></li>
 	%end
 </ol>
