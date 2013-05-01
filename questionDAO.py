@@ -45,3 +45,8 @@ class QuestionDAO:
 			cursor = self.questions.find({"topic": topic, "levels": level}).limit(num_questions)
 
 		return list(cursor)
+
+	def get_all_questions(self):
+
+		cursor = self.questions.find()
+		return list(cursor)

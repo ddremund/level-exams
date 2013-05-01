@@ -36,10 +36,31 @@ def get_newquestion():
 
 	username = 'Derek'
 
-	return bottle.template('new_question', dict(username = username))
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+
+	return bottle.template('new_question', dict(username = username, topics = topics, 
+		selected_topic = "", new_topic = "", errors = "", question = "", answer = "", levels = []))
 
 @bottle.post('/newquestion')
 def post_newquestion():	
+
+	username = 'Derek'
+
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+
+	question = bottle.request.forms.get("question")
+	answer = bottle.request.forms.get("answer")
+	topic = bottle.request.forms.get("topic")
+	new_topic = bottle.request.forms.get("new_topic")
+	levels = bottle.request.forms.getall("level")
+
+	if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
+		errors = "Question must have question text, answer, topic, and associated levels."
+		return bottle.template("new_question", dict(username = username, topics = topics, 
+			selected_topic = topic, new_topic = new_topic, errors = errors, question = question, 
+			answer = answer, levels = levels))
+	else:
+		return bottle.redirect('/')
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):

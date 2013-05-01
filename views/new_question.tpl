@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Leveling Test: {{description}}</title>
+<title>Add New Question</title>
 </head>
 <body>
 
@@ -11,8 +11,37 @@
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
 
-<h1>Enterprise Windows Leveling Test</h1><br />
+<br />{{errors}}
 
+<h1>Create Question</h1>
+<form action = "/newquestion" method="POST">
+	<h2>Topic</h2>
+	<select name="topic">
+		<option value="new">New Topic</option>
+		%for topic in topics:
+			%if topic == selected_topic:
+				<option value="{{topic}}" selected>{{topic}}</option>
+			%else:
+				<option value="{{topic}}">{{topic}}</option>
+			%end
+		%end
+	</select>
+	<br />New Topic: <input type="text" name="new_topic" value="{{new_topic}}"></input>
+	<h2>Question</h2>
+	<textarea name="question" cols="80" rows="10">{{question}}</textarea>
+	<h2>Answer</h2>
+	<textarea name="answer" cols="80" rows="10">{{answer}}</textarea>
+	<br />Levels: 
+	%for level in [1,2,3]:
+		%if level in levels:
+			<input type="checkbox" name="level" value="{{level}}" checked />L{{level}}
+		%else:
+			<input type="checkbox" name="level" value="{{level}}" />L{{level}}
+		%end
+	%end
+	<br /><input type="Submit" />
+
+</form>
 
 </body>
 </html>
