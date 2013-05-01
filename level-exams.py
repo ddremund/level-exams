@@ -179,6 +179,14 @@ def create_test_all():
 		description = description, pct_top = pct_top, 
 		questions = test_questions))
 
+@bottle.route('/test/custom')
+def create_test_custom():
+
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
+
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
 
