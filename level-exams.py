@@ -184,7 +184,7 @@ def create_test_all():
 			topic_questions.extend(questions.get_questions(topic, str(level)))
 		test_questions[topic] = {q['_id']:q for q in topic_questions}.values()
 
-		test_questions[topic].sort(key= lambda item: max(item['levels']))
+		test_questions[topic].sort(key= lambda item: min(item['levels']))
 
 	return bottle.template('test_template', dict(username = username, 
 		description = description, pct_top = pct_top, 
@@ -274,7 +274,7 @@ def create_test(test_id):
 		shuffle(level_questions)
 		topic_questions.extend(level_questions[0:int(math.ceil((1 - pct_top / 100.0) * topics[topic]))])
 		test_questions[topic] = topic_questions
-	 	test_questions[topic].sort(key= lambda item: max(item['levels']))
+	 	test_questions[topic].sort(key= lambda item: min(item['levels']))
 	 	print topic, len(topic_questions)
 
 	return bottle.template('test_template', dict(username = username, 
