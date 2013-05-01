@@ -179,13 +179,18 @@ def create_test_all():
 		description = description, pct_top = pct_top, 
 		questions = test_questions))
 
-@bottle.route('/test/custom')
-def create_test_custom():
+@bottle.get('/test/custom')
+def get_test_custom():
 
 	cookie = bottle.request.get_cookie("session")
 	username = sessions.get_username(cookie)
 	if username is None:
-		bottle.redirect("/login")
+		bottle.redirect("/login").
+
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+
+	return bottle.template("custom_test", dict(username = username, 
+		name = "", pct_lower = "", selected_level = "", topics = topics))
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
