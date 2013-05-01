@@ -18,14 +18,22 @@ import pymongo
 import bottle
 import questionDAO
 import testTypeDAO
+import sessionDAO
+import userDAO
 import json
 import cgi
 import math
+import re
+from random import shuffle
 
 @bottle.route('/')
 def site_index():
 
-	username = 'Derek'
+	# username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	return bottle.template('main_template', dict(username = username, 
 		test_types = test_types.get_test_types()))
@@ -33,7 +41,11 @@ def site_index():
 @bottle.get('/newquestion')
 def get_newquestion():
 
-	username = 'Derek'
+	# username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 
@@ -43,7 +55,11 @@ def get_newquestion():
 @bottle.post('/newquestion')
 def post_newquestion():	
 
-	username = 'Derek'
+	#username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 
@@ -80,7 +96,11 @@ def post_newquestion():
 @bottle.get('/question/<question_id>')
 def get_editquestion(question_id):
 
-	username = 'Derek'
+	# username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 	question = questions.get_question(question_id)
@@ -91,7 +111,12 @@ def get_editquestion(question_id):
 
 @bottle.post('/question/<question_id>')
 def post_editquestion(question_id):
-	username = 'Derek'
+
+	# username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	topics = set([question['topic'] for question in questions.get_all_questions()])
 	question = bottle.request.forms.get("question")
@@ -129,7 +154,11 @@ def post_editquestion(question_id):
 @bottle.route('/test/all')
 def create_test_all():
 
-	username = 'Derek'
+	#username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
 
 	description = "All Questions"
 	level = 3
@@ -153,7 +182,12 @@ def create_test_all():
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
 
-	username = 'Derek'
+	#username = 'Derek'
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
+
 	test_type = test_types.get_test_type(cgi.escape(test_id))
 
 	print "Generating test..."
@@ -168,21 +202,149 @@ def create_test(test_id):
 	topics = test_type['topic_counts']
 
 	for topic in topics.keys():
-		topic_questions = questions.get_questions(topic, str(level), 
-						int(math.ceil(pct_top / 100.0 * topics[topic])))
+		level_questions = questions.get_questions(topic, str(level))
+		shuffle(level_questions)
+		topic_questions = level_questions[0:int(math.ceil(pct_top / 100.0 * topics[topic]))]
 		dup_ids = [question["_id"] for question in topic_questions]
-		if int(level) > 1:
-			topic_questions.extend(questions.get_questions(topic, str(int(level) - 1), 
-				int(math.ceil((1 - pct_top / 100.0) * topics[topic])), dup_ids))
+		level_questions = questions.get_questions(topic, str(int(level) - 1), 0, dup_ids)
+		shuffle(level_questions)
+		topic_questions.extend(level_questions[0:int(math.ceil((1 - pct_top / 100.0) * topics[topic]))])
 		test_questions[topic] = topic_questions
-		test_questions[topic].sort(key= lambda item: max(item['levels']))
+	 	test_questions[topic].sort(key= lambda item: max(item['levels']))
 
-		print topic, len(topic_questions)
+	# for topic in topics.keys():
+	# 	topic_questions = questions.get_questions(topic, str(level), 
+	# 					int(math.ceil(pct_top / 100.0 * topics[topic])))
+	# 	dup_ids = [question["_id"] for question in topic_questions]
+	# 	if int(level) > 1:
+	# 		topic_questions.extend(questions.get_questions(topic, str(int(level) - 1), 
+	# 			int(math.ceil((1 - pct_top / 100.0) * topics[topic])), dup_ids))
+	# 	test_questions[topic] = topic_questions
+	# 	test_questions[topic].sort(key= lambda item: max(item['levels']))
+
+	# 	print topic, len(topic_questions)
 
 
 	return bottle.template('test_template', dict(username = username, 
 		description = description, pct_top = pct_top, 
 		questions = test_questions))
+
+@bottle.get('/internal_error')
+@bottle.view('error_template')
+def present_internal_error():
+    return {'error':"System has encountered a DB error"}
+
+# displays the initial signup form
+@bottle.get('/signup')
+def present_signup():
+    return bottle.template("signup",
+                           dict(username="", password="",
+                                password_error="",
+                                email="", username_error="", email_error="",
+                                verify_error =""))
+
+# displays the initial login form
+@bottle.get('/login')
+def present_login():
+    return bottle.template("login",
+                           dict(username="", password="",
+                                login_error=""))
+
+@bottle.post('/login')
+def process_login():
+
+    username = bottle.request.forms.get("username")
+    password = bottle.request.forms.get("password")
+
+    print "user submitted ", username, "pass ", password
+
+    user_record = users.validate_login(username, password)
+    if user_record:
+        # username is stored in the user collection in the _id key
+        session_id = sessions.start_session(user_record['_id'])
+
+        if session_id is None:
+            bottle.redirect("/internal_error")
+
+        cookie = session_id
+
+        # Warning, if you are running into a problem whereby the cookie being set here is
+        # not getting set on the redirect, you are probably using the experimental version of bottle (.12).
+        # revert to .11 to solve the problem.
+        bottle.response.set_cookie("session", cookie)
+
+        bottle.redirect("/")
+
+    else:
+        return bottle.template("login",
+                               dict(username=cgi.escape(username), password="",
+                                    login_error="Invalid Login"))
+
+@bottle.get('/logout')
+def process_logout():
+
+    cookie = bottle.request.get_cookie("session")
+
+    sessions.end_session(cookie)
+
+    bottle.response.set_cookie("session", "")
+
+
+    bottle.redirect("/login")
+
+@bottle.post('/signup')
+def process_signup():
+
+    email = bottle.request.forms.get("email")
+    username = bottle.request.forms.get("username")
+    password = bottle.request.forms.get("password")
+    verify = bottle.request.forms.get("verify")
+
+    # set these up in case we have an error case
+    errors = {'username': cgi.escape(username), 'email': cgi.escape(email)}
+    if validate_signup(username, password, verify, email, errors):
+
+        if not users.add_user(username, password, email):
+            # this was a duplicate
+            errors['username_error'] = "Username already in use. Please choose another"
+            return bottle.template("signup", errors)
+
+        session_id = sessions.start_session(username)
+        print session_id
+        bottle.response.set_cookie("session", session_id)
+        bottle.redirect("/")
+    else:
+        print "user did not validate"
+        return bottle.template("signup", errors)
+
+
+# validates that the user information is valid for new signup, return True of False
+# and fills in the error string if there is an issue
+def validate_signup(username, password, verify, email, errors):
+    USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
+    PASS_RE = re.compile(r"^.{3,20}$")
+    EMAIL_RE = re.compile(r"^[\S]+@[\S]+\.[\S]+$")
+
+    errors['username_error'] = ""
+    errors['password_error'] = ""
+    errors['verify_error'] = ""
+    errors['email_error'] = ""
+
+    if not USER_RE.match(username):
+        errors['username_error'] = "invalid username. try just letters and numbers"
+        return False
+
+    if not PASS_RE.match(password):
+        errors['password_error'] = "invalid password."
+        return False
+    if password != verify:
+        errors['verify_error'] = "password must match"
+        return False
+    if email != "":
+        if not EMAIL_RE.match(email):
+            errors['email_error'] = "invalid email address"
+            return False
+    return True
 
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
@@ -191,5 +353,8 @@ database = connection.testing
 
 questions = questionDAO.QuestionDAO(database)
 test_types = testTypeDAO.TestTypeDAO(database)
+users = userDAO.UserDAO(database)
+sessions = sessionDAO.SessionDAO(database)
 
+#bottle.debug(True)
 bottle.run(host='localhost', port=80)
