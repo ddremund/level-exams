@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Add New Question</title>
+<title>Edit Question</title>
 </head>
 <body>
 
@@ -14,8 +14,9 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 <br />{{errors}}
 
-<h1>Create Question</h1>
-<form action = "/newquestion" method="POST">
+<h1>Edit Question</h1>
+<form action = "/question/{{question_id}}" method="POST">
+	<input type="hidden" name="_id" value="question_id" />
 	<h2>Topic</h2>
 	<select name="topic">
 		<option value="new">New Topic</option>

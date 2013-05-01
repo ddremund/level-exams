@@ -10,6 +10,7 @@
 %if username != None:
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
+<a href="/">Home</a>
 
 <h1>Enterprise Windows Leveling Test</h1><br />
 Test Description: {{description}}<br /><br />
@@ -27,7 +28,7 @@ Test Description: {{description}}<br /><br />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
 	%for question in questions[topic]:
-	<li>Q: [Level(s) {{', '.join(question['levels'])}}] {{question['question']}}<br />A: {{question['answer']}}<br />Notes: <br /><br /><br /><br /><br /></li>
+	<li>Q: [Level {{'/'.join(question['levels'])}}] {{question['question']}}<br />A: {{question['answer']}}<br /><a href="/question/{{question['_id']}}">Edit Question</a><br />Notes: <br /><br /><br /><br /><br /></li>
 	%end
 </ol>
 %end

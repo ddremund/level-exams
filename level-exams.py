@@ -29,7 +29,6 @@ def site_index():
 
 	return bottle.template('main_template', dict(username = username, 
 		test_types = test_types.get_test_types()))
-	#return "<br />".join(json.dumps(item) for item in questions.get_questions("", "1"))
 
 @bottle.get('/newquestion')
 def get_newquestion():
@@ -59,8 +58,95 @@ def post_newquestion():
 		return bottle.template("new_question", dict(username = username, topics = topics, 
 			selected_topic = topic, new_topic = new_topic, errors = errors, question = question, 
 			answer = answer, levels = levels))
+	
+	escaped_question = cgi.escape(question, quote=True)
+	escaped_answer = cgi.escape(answer, quote=True)
+	if topic == "new":
+		escaped_topic = cgi.escape(new_topic, quote=True)
 	else:
-		return bottle.redirect('/')
+		escaped_topic = topic
+
+	print "Inserting Question..."
+	print "Topic:", escaped_topic
+	print "Question:", escaped_question
+	print "Answer:", escaped_answer
+	print "Levels:", levels
+	questions.insert_question(escaped_topic, escaped_question, escaped_answer, levels)
+
+	return bottle.template('new_question', dict(username = username, topics = topics, 
+		selected_topic = "", new_topic = "", errors = "Question successfully inserted.", 
+		question = "", answer = "", levels = []))
+
+@bottle.get('/question/<question_id>')
+def get_editquestion(question_id):
+
+	username = 'Derek'
+
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+	question = questions.get_question(question_id)
+
+	return bottle.template('edit_question', dict(username = username, topics = topics, 
+		question_id = question['_id'], selected_topic = question['topic'], new_topic = "", errors = "", 
+		question = question['question'], answer = question['answer'], levels = question['levels']))
+
+@bottle.post('/question/<question_id>')
+def post_editquestion(question_id):
+	username = 'Derek'
+
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+	question = bottle.request.forms.get("question")
+	answer = bottle.request.forms.get("answer")
+	topic = bottle.request.forms.get("topic")
+	new_topic = bottle.request.forms.get("new_topic")
+	levels = bottle.request.forms.getall("level")
+
+	if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
+		errors = "Question must have question text, answer, topic, and associated levels."
+		return bottle.template("edit_question", dict(username = username, topics = topics, 
+			question_id = question_id, selected_topic = topic, new_topic = new_topic, 
+			errors = errors, question = question, answer = answer, levels = levels))
+
+	escaped_question = cgi.escape(question, quote=True)
+	escaped_answer = cgi.escape(answer, quote=True)
+	if topic == "new":
+		escaped_topic = cgi.escape(new_topic, quote=True)
+	else:
+		escaped_topic = topic
+
+	print "Updating Question..."
+	print "_id:", question_id
+	print "Topic:", escaped_topic
+	print "Question:", escaped_question
+	print "Answer:", escaped_answer
+	print "Levels:", levels
+	questions.update_question(question_id, escaped_topic, escaped_question, escaped_answer, levels)
+
+	errors = "Question successfully updated."
+	return bottle.template("edit_question", dict(username = username, topics = topics, 
+			question_id = question_id, selected_topic = topic, new_topic = new_topic, 
+			errors = errors, question = question, answer = answer, levels = levels))
+
+@bottle.route('/test/all')
+def create_test_all():
+
+	username = 'Derek'
+
+	description = "All Questions"
+	level = 3
+	pct_top = 100
+
+	test_questions = {}
+	topics = set([question['topic'] for question in questions.get_all_questions()])
+
+	for topic in topics:
+		topic_questions = []
+		for level in [1,2,3]:
+			topic_questions.extend(questions.get_questions(topic, str(level)))
+		test_questions[topic] = {q['_id']:q for q in topic_questions}.values()
+
+	return bottle.template('test_template', dict(username = username, 
+		description = description, pct_top = pct_top, 
+		questions = test_questions))
 
 @bottle.route('/test/<test_id>')
 def create_test(test_id):
@@ -82,9 +168,10 @@ def create_test(test_id):
 	for topic in topics.keys():
 		topic_questions = questions.get_questions(topic, str(level), 
 						int(math.ceil(pct_top / 100.0 * topics[topic])))
+		dup_ids = [question["_id"] for question in topic_questions]
 		if int(level) > 1:
 			topic_questions.extend(questions.get_questions(topic, str(int(level) - 1), 
-				int(math.ceil((1 - pct_top / 100.0) * topics[topic]))))
+				int(math.ceil((1 - pct_top / 100.0) * topics[topic])), dup_ids))
 		test_questions[topic] = topic_questions
 
 		print topic, len(topic_questions)

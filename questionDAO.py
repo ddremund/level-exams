@@ -15,6 +15,7 @@
 # limitations under the License.
 
 import sys
+from bson.objectid import ObjectId
 
 class QuestionDAO:
 
@@ -33,16 +34,41 @@ class QuestionDAO:
 					"levels": levels_array}
 
 		try:
-			self.questions.insert(question)
+			question_id = self.questions.insert(question)
 		except Exception, e:
 			print "Error inserting post:", e
+			question_id = None
 
-	def get_questions(self, topic, level, num_questions = 0):
+		return question_id
+
+	def update_question(self, question_id, topic, question, answer, levels_array):
+
+		print "Updating question", question_id
+
+		question = {"_id": ObjectId(question_id),
+					"topic": topic,
+					"question": question,
+					"answer": answer,
+					"levels": levels_array}
+
+		try:
+			updated = self.questions.update({"_id": ObjectId(question_id)}, question)
+		except Exception, e:
+			print "Error upating question:", e
+			updated = None
+
+		return updated
+
+	def get_question(self, question_id):
+
+		return self.questions.find_one({"_id": ObjectId(question_id)})
+
+	def get_questions(self, topic, level, num_questions = 0, dup_ids = []):
 
 		if num_questions == 0:
 			cursor = self.questions.find({"topic": topic, "levels": level})
 		else:
-			cursor = self.questions.find({"topic": topic, "levels": level}).limit(num_questions)
+			cursor = self.questions.find({"topic": topic, "levels": level, "_id": {"$nin": dup_ids}}).limit(num_questions)
 
 		return list(cursor)
 
