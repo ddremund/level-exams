@@ -32,6 +32,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	<table>
 		%for topic in topics:
 		<tr><td>{{topic}}:</td><td><input type="text" name="{{topic}}"</td></tr>
+		%end
 	</table>
 	<br /><input type="submit" />
 </form>
