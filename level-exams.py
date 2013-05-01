@@ -94,7 +94,7 @@ def post_newquestion():
 		question = "", answer = "", levels = []))
 
 @bottle.route('/question/remove/<question_id>')
-def remove_question(question_id, test_id):
+def remove_question(question_id):
 
 	cookie = bottle.request.get_cookie("session")
 	username = sessions.get_username(cookie)
