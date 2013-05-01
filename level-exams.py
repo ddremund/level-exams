@@ -93,6 +93,17 @@ def post_newquestion():
 		selected_topic = "", new_topic = "", errors = "Question successfully inserted.", 
 		question = "", answer = "", levels = []))
 
+@bottle.route('/question/remove/<question_id>')
+def remove_question(question_id, test_id):
+
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
+
+	removed = questions.remove_question(question_id)
+	bottle.redirect('/')
+
 @bottle.get('/question/<question_id>')
 def get_editquestion(question_id):
 
@@ -219,6 +230,17 @@ def post_test_custom():
 	test_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts)
 
 	bottle.redirect('/test/{}'.format(test_id))
+
+@bottle.route('/test/remove/<test_id>')
+def remove_test(test_id):
+
+	cookie = bottle.request.get_cookie("session")
+	username = sessions.get_username(cookie)
+	if username is None:
+		bottle.redirect("/login")
+
+	removed = test_types.remove_test_type(test_id)
+	bottle.redirect('/')
 
 
 @bottle.route('/test/<test_id>')
