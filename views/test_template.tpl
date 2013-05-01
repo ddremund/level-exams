@@ -28,7 +28,7 @@ Test Description: {{description}}<br /><br />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
 	%for question in questions[topic]:
-	<li>Q: [Level {{'/'.join(question['levels'])}}] {{question['question']}}<br />A: {{question['answer']}}<br /><a href="/question/{{question['_id']}}">Edit Question</a><br />Notes: <br /><br /><br /><br /><br /></li>
+	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br /><br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
 </ol>
 %end
@@ -36,4 +36,3 @@ Test Description: {{description}}<br /><br />
 
 </body>
 </html>
-

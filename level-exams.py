@@ -59,8 +59,8 @@ def post_newquestion():
 			selected_topic = topic, new_topic = new_topic, errors = errors, question = question, 
 			answer = answer, levels = levels))
 	
-	escaped_question = cgi.escape(question, quote=True)
-	escaped_answer = cgi.escape(answer, quote=True)
+	escaped_question = question #cgi.escape(question, quote=True)
+	escaped_answer = answer #cgi.escape(answer, quote=True)
 	if topic == "new":
 		escaped_topic = cgi.escape(new_topic, quote=True)
 	else:
@@ -106,8 +106,8 @@ def post_editquestion(question_id):
 			question_id = question_id, selected_topic = topic, new_topic = new_topic, 
 			errors = errors, question = question, answer = answer, levels = levels))
 
-	escaped_question = cgi.escape(question, quote=True)
-	escaped_answer = cgi.escape(answer, quote=True)
+	escaped_question = question#cgi.escape(question, quote=True)
+	escaped_answer = answer#cgi.escape(answer, quote=True)
 	if topic == "new":
 		escaped_topic = cgi.escape(new_topic, quote=True)
 	else:
