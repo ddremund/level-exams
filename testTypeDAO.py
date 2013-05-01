@@ -24,16 +24,22 @@ class TestTypeDAO:
 		self.db = database
 		self.test_types = database.test_types
 
-	def insert_test_type(self, name):
+	def insert_test_type(self, name, pct_top_level, dest_level, topic_counts):
 
 		print "Inserting Test Type", name
 
-		test_type = {"name": name}
+		test_type = {"name": name,
+					 "dest_level": dest_level,
+					 "pct_top_level": pct_top_level,
+					 "topic_counts": topic_counts}
 
 		try:
-			self.test_types.insert(test_type)
+			test_id = self.test_types.insert(test_type)
 		except Exception, e:
-			print "Error inserting post:", e
+			print "Error inserting test type:", e
+			test_id = None
+			
+		return test_id
 
 	def get_test_types(self):
 
