@@ -102,7 +102,7 @@ def remove_question(question_id):
 		bottle.redirect("/login")
 
 	removed = questions.remove_question(question_id)
-	bottle.redirect('/')
+	bottle.redirect('/test/all')
 
 @bottle.get('/question/<question_id>')
 def get_editquestion(question_id):
