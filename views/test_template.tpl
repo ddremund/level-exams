@@ -31,11 +31,20 @@ Candidate Name:<br />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
 	%for question in questions[topic]:
-	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br /><br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
+	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br /><br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br />Image URL: {{question['image_url']}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
 </ol>
 %end
 
+Images:
+%for topic in questions.keys():
+	%for i, question in enumerate(questions[topic]):
+		%if not question["image_url"] == "":
+			Image for {{topic}} #{{i + 1}}:<br />
+			<img src="{{!question['image_url']}}" /><br />
+		%end
+	%end
+%end
 
 </body>
 </html>

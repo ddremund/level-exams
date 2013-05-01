@@ -30,6 +30,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	<br />New Topic: <input type="text" name="new_topic" value="{{new_topic}}"></input>
 	<h2>Question</h2>
 	<textarea name="question" cols="80" rows="10">{{question}}</textarea>
+	Image URL: <input type="text" name="image_url" value="{{image_url}}" />
 	<h2>Answer</h2>
 	<textarea name="answer" cols="80" rows="10">{{answer}}</textarea>
 	<br />Levels: 
