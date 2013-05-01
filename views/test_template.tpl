@@ -13,7 +13,9 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <a href="/">Home</a>
 
 <h1>Enterprise Windows Leveling Test</h1><br />
-Test Description: {{description}}<br /><br />
+Test Description: {{description}}<br />
+Created by: {{username}}<br />
+<br /><br />
 
 <table>
 	<tr align="left"><th>Topic</th><th>Questions</th></tr>
