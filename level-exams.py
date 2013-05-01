@@ -337,7 +337,7 @@ def validate_signup(username, password, verify, email, errors):
 connection_string = "mongodb://localhost"
 connection = pymongo.MongoClient(connection_string)
 
-database = connection.testing
+database = connection.leveling
 
 questions = questionDAO.QuestionDAO(database)
 test_types = testTypeDAO.TestTypeDAO(database)
