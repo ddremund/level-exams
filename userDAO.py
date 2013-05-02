@@ -107,7 +107,7 @@ class UserDAO:
 
         return self.users.find_one({'_id': username}, {'roles': 1, '_id': 0})
 
-    def get_all_users(self)
+    def get_all_users(self):
 
         return self.users.find()
 
