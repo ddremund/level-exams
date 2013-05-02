@@ -325,7 +325,28 @@ def retrieve_all_tests():
     tests.sort(key = lambda item: item['timestamp'])
 
     return bottle.template('saved_tests', dict(username = username, 
-                                            tests = tests))
+                                            tests = tests, errors = ""))
+
+@bottle.route('/test/saved/delete/<test_id>')
+def delete_saved_test(test_id):
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    test = saved_tests.get_test(test_id)
+    tests = saved_tests.get_all_tests()
+    
+    tests.sort(key = lambda item: item['timestamp'])
+    if not test['username'] == username and not username == 'ent-leveling':
+        return bottle.template('saved_tests', dict(username = username, 
+                                tests = tests, errors = "Test created by another user"))
+    else:
+        saved_tests.remove_test(test_id)
+        return bottle.template('saved_tests', dict(username = username, 
+                                tests = tests, errors = "Test successfully deleted"))
+
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')

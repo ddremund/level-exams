@@ -11,6 +11,8 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 %end
 <a href="/">Home</a>
 
+<br />{{errors}}
+
 <h1>Enterprise Windows Leveling Test Generator</h1><br />
 
 The following tests are frozen exactly as originally generated.
