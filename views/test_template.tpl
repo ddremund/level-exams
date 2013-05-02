@@ -18,7 +18,7 @@ Created by: {{username}}<br />
 Timestamp: {{timestamp}}<br />
 Level to Attain: {{level}}<br />
 Percentage of questions at top level: {{pct_top}}<br />
-Test permalink: <a href="http://leveling.rstnt.com/test/saved/{{test_id}}">http://leveling.rstnt.com/test/saved/{{test_id}}</a><br />
+Test permalink: <a href="/test/saved/{{test_id}}">http://leveling.rstnt.com/test/saved/{{test_id}}</a><br />
 Candidate Name:<br />
 <br /><br />
 
