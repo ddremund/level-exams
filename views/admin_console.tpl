@@ -18,11 +18,12 @@ Signups Status: {{prefs.get('signups', "None")}} | Enable | Disable<br />
 Create User:
 <form action="/signup" method="POST">
 	<table>
-		<tr><td></td><td><input type="text" name="username"/></td></tr>
-		<tr><td></td><td><input type="text" name="email"/></td></tr>
-		<tr><td></td><td><input type="password" name="password"/></td></tr>
-		<tr><td></td><td><input type="password" name="verify"/></td></tr>
+		<tr><td>Username: </td><td><input type="text" name="username"/></td></tr>
+		<tr><td>Email Address: </td><td><input type="text" name="email"/></td></tr>
+		<tr><td>Password: </td><td><input type="password" name="password"/></td></tr>
+		<tr><td>Verify Password:</td><td><input type="password" name="verify"/></td></tr>
 	</table>
+	<input type="submit" />
 </form>
 
 </body>
