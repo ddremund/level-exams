@@ -291,7 +291,7 @@ def create_test(template_id):
 
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = level,
-        questions = test_questions))
+        questions = test_questions, test_id = saved_test_id))
 
 @bottle.route('/test/saved/<test_id>')
 def retrieve_test(test_id):
@@ -300,7 +300,7 @@ def retrieve_test(test_id):
 
     return bottle.template('test_template', dict(username = test['username'],
         description = test['template'], pct_top = test['pct_top'], 
-        level = test['level'], questions = test['questions']))
+        level = test['level'], questions = test['questions'], test_id = test_id))
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')
