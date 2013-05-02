@@ -24,7 +24,7 @@ class SavedTestDAO:
 		self.db = database
 		self.saved_tests = database.saved_tests
 
-	def insert_test(self, username, description, level, pct_top, questions):
+	def insert_test(self, username, description, level, pct_top, questions, timestamp):
 
 		print "Saving test"
 
@@ -32,7 +32,8 @@ class SavedTestDAO:
 				"template": description,
 				"level": level,
 				"pct_top": pct_top, 
-				"questions": questions}
+				"questions": questions,
+				"timestamp": timestamp}
 
 		try:
 			test_id = self.saved_tests.insert(test)

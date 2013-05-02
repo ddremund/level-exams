@@ -25,6 +25,7 @@ import json
 import cgi
 import math
 import re
+import datetime
 from random import shuffle
 
 @bottle.route('/')
@@ -179,6 +180,7 @@ def create_test_all():
     if username is None:
         bottle.redirect("/login")
 
+    timestamp = str(datatetime.datetime.now()).split('.')[0]
     description = "All Questions"
     level = 3
     pct_top = 100
@@ -196,8 +198,9 @@ def create_test_all():
         test_questions[topic].sort(key= lambda item: min(item['levels']))
 
     return bottle.template('test_template', dict(username = username, 
-        description = description, pct_top = pct_top, 
-        questions = test_questions))
+        description = description, pct_top = pct_top, level = "All",
+        test_id = "not applicable", questions = test_questions, 
+        timestamp = timestamp))
 
 @bottle.get('/test/custom')
 def get_test_custom():
@@ -269,6 +272,7 @@ def create_test(template_id):
 
     test_questions = {}
 
+    timestamp = str(datatetime.datetime.now()).split('.')[0]
     description = test_type['name']
     level = test_type['dest_level']
     pct_top = test_type['pct_top_level']
@@ -291,7 +295,8 @@ def create_test(template_id):
 
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = level,
-        questions = test_questions, test_id = saved_test_id))
+        questions = test_questions, test_id = saved_test_id, 
+        timestamp = timestamp))
 
 @bottle.route('/test/saved/<test_id>')
 def retrieve_test(test_id):
@@ -300,7 +305,8 @@ def retrieve_test(test_id):
 
     return bottle.template('test_template', dict(username = test['username'],
         description = test['template'], pct_top = test['pct_top'], 
-        level = test['level'], questions = test['questions'], test_id = test_id))
+        level = test['level'], questions = test['questions'], .
+        test_id = test_id, timestamp = test['timestamp']))
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')
