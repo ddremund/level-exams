@@ -305,7 +305,7 @@ def retrieve_test(test_id):
 
     return bottle.template('test_template', dict(username = test['username'],
         description = test['template'], pct_top = test['pct_top'], 
-        level = test['level'], questions = test['questions'], .
+        level = test['level'], questions = test['questions'], 
         test_id = test_id, timestamp = test['timestamp']))
 
 @bottle.get('/internal_error')
