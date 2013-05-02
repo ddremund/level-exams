@@ -21,8 +21,8 @@ Users:<br />
 	<tr><th>Username</th><th>Email</th>
 	%for role in prefs['roles']:
 	<th>{{role}}</th>
-	</tr>
 	%end
+	</tr>
 	%for user in users:
 	<tr><td>{{user['_id']}}</td><td>{{user.get('email', "None provided")}}</td>
 		%for role in prefs['roles']:
