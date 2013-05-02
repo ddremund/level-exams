@@ -15,6 +15,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <h1>Enterprise Windows Leveling Test</h1><br />
 Test Description: {{description}}<br />
 Created by: {{username}}<br />
+Level to Attain: {{level}}<br />
 Candidate Name:<br />
 <br /><br />
 

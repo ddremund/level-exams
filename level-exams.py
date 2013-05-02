@@ -286,7 +286,7 @@ def create_test(test_id):
 	 	print topic, len(topic_questions)
 
 	return bottle.template('test_template', dict(username = username, 
-		description = description, pct_top = pct_top, 
+		description = description, pct_top = pct_top, level = level,
 		questions = test_questions))
 
 @bottle.get('/internal_error')

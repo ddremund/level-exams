@@ -16,3 +16,12 @@
 
 import sys
 from bson.objectid import ObjectId
+
+class SavedTestDAO:
+
+	def __init__(self, database):
+
+		self.db = database
+		self.saved_tests = database.saved_tests
+
+	def insert_test(self, user, name, level, questions):
