@@ -24,4 +24,41 @@ class SavedTestDAO:
 		self.db = database
 		self.saved_tests = database.saved_tests
 
-	def insert_test(self, user, name, level, questions):
+	def insert_test(self, user, name, level, pct_top, questions):
+
+		print "Saving test"
+
+		test = {"user": user,
+				"name": name,
+				"level": level,
+				"pct_top": pct_top, 
+				"questions": questions}
+
+		try:
+			test_id = self.saved_tests.insert(test)
+		except Exception, e:
+			print "Error saving test:", e
+			test_id = None
+
+		return test_id
+
+	def remove_test(self, test_id):
+
+		print "Removing test", test_id
+
+		try:
+			removed = self.questions.remove({"_id": ObjectId(test_id)})
+		except Exception, e:
+			print "Error removing test:", e
+			removed = 0
+
+		return removed
+
+	def get_test(self, test_id):
+
+		return self.saved_tests.find_one({"_id": ObjectId(question_id)})
+
+	def get_all_tests(self):
+
+		cursor = self.saved_tests.find()
+		return list(cursor)
