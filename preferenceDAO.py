@@ -50,7 +50,7 @@ class PreferenceDAO:
 
 	def get_preference(self, name):
 
-		master_prefs = self.preferences.find_one({"_id": master}, {'_id': 0})
+		master_prefs = self.preferences.find_one({"_id": 'master'}, {'_id': 0})
 		return master_prefs[name]
 
 	def get_master_preferences(self):
