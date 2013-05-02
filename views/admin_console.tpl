@@ -34,6 +34,7 @@ Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/en
 	</tr>
 	%end
 </table>
+<input type="submit" value="Update Roles" />
 </form>
 <br /><br />
 Create User:
@@ -44,7 +45,7 @@ Create User:
 		<tr><td>Password: </td><td><input type="password" name="password"/></td></tr>
 		<tr><td>Verify Password:</td><td><input type="password" name="verify"/></td></tr>
 	</table>
-	<input type="submit" />
+	<input type="submit" value="Create User"/>
 </form>
 
 </body>
