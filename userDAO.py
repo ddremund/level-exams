@@ -72,10 +72,10 @@ class UserDAO:
 
 
     # creates a new user in the users collection
-    def add_user(self, username, password, email):
+    def add_user(self, username, password, email, roles = []):
         password_hash = self.make_pw_hash(password)
 
-        user = {'_id': username, 'password': password_hash}
+        user = {'_id': username, 'password': password_hash, 'roles': roles}
         if email != "":
             user['email'] = email
 
