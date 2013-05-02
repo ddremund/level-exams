@@ -16,7 +16,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 Test Template: {{description}}<br />
 Created by: {{username}}<br />
 Level to Attain: {{level}}<br />
-Percentage of qustions at top level: {{pct_top}}<br />
+Percentage of questions at top level: {{pct_top}}<br />
 Test permalink: <a href="http://leveling.rstnt.com/test/saved/{{test_id}}">http://leveling.rstnt.com/test/saved/{{test_id}}</a><br />
 Candidate Name:<br />
 <br /><br />
