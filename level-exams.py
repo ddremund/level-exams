@@ -369,7 +369,12 @@ def post_admin():
     if username is None or ('admin' not in users.get_roles(username)):
         bottle.redirect("/login")
 
-
+    usernames = [user['_id'] for user in users.get_all_users()]
+    for username in usernames:
+        roles = bottle.request.forms.getall(username)
+        set_roles(username, roles)
+        
+    bottle.redirect('/admin')
 
 @bottle.route('/pref/set/<name>/<value>')
 def set_pref(name, value):
