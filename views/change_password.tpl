@@ -13,7 +13,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <a href="/">Home</a>
 
 <br />{{errors}}<br />
-<form>
+<form action = "/change_password" method="POST">
 Change Password: <input type="password" name="new_password" />
 <input type="submit" />
 </form>
