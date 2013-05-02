@@ -10,7 +10,7 @@
 %if username != None:
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
-<a href="/">Home</a>
+ | <a href="/">Home</a>
 
 <h1>Enterprise Windows Leveling Test</h1><br />
 Test Template: {{description}}<br />

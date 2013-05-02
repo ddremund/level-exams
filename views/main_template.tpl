@@ -8,7 +8,7 @@
 <body>
 
 %if username != None:
-Welcome {{username}}	<a href="/logout">Logout</a><a href="/change_password">Change Password</a>
+Welcome {{username}}	<a href="/logout">Logout</a> | <a href="/change_password">Change Password</a>
 %end
 
 <h1>Enterprise Windows Leveling Test Generator</h1>

@@ -10,7 +10,7 @@
 %if username != None:
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
-<a href="/">Home</a>
+ | <a href="/">Home</a>
 
 <br />{{errors}}<br />
 <form action = "/change_password" method="POST">
