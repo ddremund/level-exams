@@ -28,7 +28,7 @@ class SavedTestDAO:
 
 		print "Saving test"
 
-		test = {"username": user,
+		test = {"username": username,
 				"template": description,
 				"level": level,
 				"pct_top": pct_top, 
