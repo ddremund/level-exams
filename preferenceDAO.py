@@ -29,7 +29,7 @@ class PreferenceDAO:
 		print "Updating preference", name, value
 
 		try:
-			pref_id = self.preferences.update({'_id': 'master', {'$set': {'{}'.format(name): value}}})
+			pref_id = self.preferences.update({'_id': 'master'}, {'$set': {'{}'.format(name): value}})
 		except Exception, e:
 			print "Error inserting preference:", e
 			pref_id = None
@@ -41,7 +41,7 @@ class PreferenceDAO:
 		print "Removing preference", name
 
 		try:
-			pref_id = self.preferences.update({'_id': 'master', {'$unset': {'{}'.format(name): 1}}})
+			pref_id = self.preferences.update({'_id': 'master'}, {'$unset': {'{}'.format(name): 1}})
 		except Exception, e:
 			print "Error removing preference:", e
 			pref_id = None
