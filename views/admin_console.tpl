@@ -14,7 +14,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 <h1>Admin Console</h1>
 
-Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/enabled">Enable</a> | <a href="/pref/set/signups/disabled">Disable</a><br /><br />
+<b>Signups Status: {{prefs.get('signups', "None")}}</b> | <a href="/pref/set/signups/enabled">Enable</a> | <a href="/pref/set/signups/disabled">Disable</a><br /><br />
 <form action="/admin" method="POST">
 <table>
 	<tr><th>Username</th><th>Email</th>
@@ -37,7 +37,7 @@ Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/en
 <input type="submit" value="Update Roles" />
 </form>
 <br /><br />
-Create User:
+<b>Create User:</b>
 <form action="/signup" method="POST">
 	<table>
 		<tr><td>Username: </td><td><input type="text" name="username"/></td></tr>
