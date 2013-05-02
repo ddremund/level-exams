@@ -358,7 +358,8 @@ def get_admin():
         bottle.redirect("/login")
 
     return bottle.template('admin_console', dict(username = username, 
-                                                prefs = preferences.get_master_preferences()))
+                            users = users.get_all_users(), 
+                            prefs = preferences.get_master_preferences()))
 
 @bottle.route('/pref/set/<name>/<value>')
 def set_pref(name, value):

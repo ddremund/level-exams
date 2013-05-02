@@ -14,7 +14,14 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 <h1>Admin Console</h1>
 
-Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/enabled">Enable</a> | <a href="/pref/set/signups/disabled">Disable</a><br />
+Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/enabled">Enable</a> | <a href="/pref/set/signups/disabled">Disable</a><br /><br />
+Users:<br />
+<table>
+	%for user in users:
+	<td>{{user['name']}}</td><td>{{user['email']}}</td><td>{{str(user['roles'])}}</td>
+	%end
+</table>
+<br /><br />
 Create User:
 <form action="/signup" method="POST">
 	<table>
