@@ -16,7 +16,6 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/enabled">Enable</a> | <a href="/pref/set/signups/disabled">Disable</a><br /><br />
 <form>
-Users:<br />
 <table>
 	<tr><th>Username</th><th>Email</th>
 	%for role in prefs['roles']:

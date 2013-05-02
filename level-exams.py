@@ -338,7 +338,7 @@ def delete_saved_test(test_id):
 
     test = saved_tests.get_test(test_id)
     
-    if not test['username'] == username and ('admin' not in users.get_roles(username)['roles']):
+    if not test['username'] == username and ('admin' not in users.get_roles(username)):
         errors = "Test created by another user"
     else:
         saved_tests.remove_test(test_id)
@@ -354,19 +354,29 @@ def get_admin():
 
     cookie = bottle.request.get_cookie("session")
     username = sessions.get_username(cookie)
-    if username is None or ('admin' not in users.get_roles(username)['roles']):
+    if username is None or ('admin' not in users.get_roles(username)):
         bottle.redirect("/login")
 
     return bottle.template('admin_console', dict(username = username, 
                             users = users.get_all_users(), 
                             prefs = preferences.get_master_preferences()))
 
+@bottle.post('/admin')
+def post_admin():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)):
+        bottle.redirect("/login")
+
+
+
 @bottle.route('/pref/set/<name>/<value>')
 def set_pref(name, value):
 
     cookie = bottle.request.get_cookie("session")
     username = sessions.get_username(cookie)
-    if username is None or ('admin' not in users.get_roles(username)['roles']):
+    if username is None or ('admin' not in users.get_roles(username)):
         bottle.redirect("/login")
 
     preferences.set_preference(name, value)

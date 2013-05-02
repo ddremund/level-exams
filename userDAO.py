@@ -105,7 +105,11 @@ class UserDAO:
 
     def get_roles(self, username):
 
-        return self.users.find_one({'_id': username}, {'roles': 1, '_id': 0})
+        return self.users.find_one({'_id': username}, {'roles': 1, '_id': 0})['roles']
+
+    def set_roles(self, username, roles):
+
+        return self.users.update({'_id': username, {'$set': {'roles': roles}}})
 
     def get_all_users(self):
 
