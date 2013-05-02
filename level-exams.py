@@ -355,6 +355,11 @@ def process_logout():
 @bottle.post('/signup')
 def process_signup():
 
+	signup_enabled = True
+
+	if signup_enabled == False:
+		bottle.redirect("/")
+
     email = bottle.request.forms.get("email")
     username = bottle.request.forms.get("username")
     password = bottle.request.forms.get("password")
@@ -413,6 +418,7 @@ database = connection.leveling
 
 questions = questionDAO.QuestionDAO(database)
 test_types = testTypeDAO.TestTypeDAO(database)
+saved_tests = savedTestDAO.SavedTestDAO(database)
 users = userDAO.UserDAO(database)
 sessions = sessionDAO.SessionDAO(database)
 
