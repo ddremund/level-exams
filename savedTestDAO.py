@@ -48,7 +48,7 @@ class SavedTestDAO:
 		print "Removing test", test_id
 
 		try:
-			removed = self.questions.remove({"_id": ObjectId(test_id)})
+			removed = self.saved_tests.remove({"_id": ObjectId(test_id)})
 		except Exception, e:
 			print "Error removing test:", e
 			removed = 0
