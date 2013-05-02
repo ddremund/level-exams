@@ -21,6 +21,7 @@ import testTypeDAO
 import savedTestDAO
 import sessionDAO
 import userDAO
+import preferenceDAO
 import json
 import cgi
 import math
@@ -441,7 +442,7 @@ def process_logout():
 @bottle.post('/signup')
 def process_signup():
 
-    signup_enabled = True
+    signup_enabled = False
 
     if signup_enabled == False:
         bottle.redirect("/")
@@ -513,6 +514,7 @@ test_types = testTypeDAO.TestTypeDAO(database)
 saved_tests = savedTestDAO.SavedTestDAO(database)
 users = userDAO.UserDAO(database)
 sessions = sessionDAO.SessionDAO(database)
+preferences = preferenceDAO.PreferenceDAO(database)
 
 #bottle.debug(True)
 bottle.run(host='leveling.rstnt.com', port=80)
