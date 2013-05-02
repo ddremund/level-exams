@@ -24,14 +24,12 @@ class PreferenceDAO:
 		self.db = database
 		self.preferences = database.preferences
 
-	def insert_preference(self, name, value):
+	def set_preference(self, name, value):
 
-		print "Adding preference", name, value
-
-		preference = {"name": name, "value": value}
+		print "Updating preference", name, value
 
 		try:
-			pref_id = self.preferences.insert(preference)
+			pref_id = self.preferences.update({'_id': 'master', {'$set': {'{}'.format(name): value}}})
 		except Exception, e:
 			print "Error inserting preference:", e
 			pref_id = None
@@ -43,18 +41,21 @@ class PreferenceDAO:
 		print "Removing preference", name
 
 		try:
-			removed = self.preferences.remove({"name": name})
+			pref_id = self.preferences.update({'_id': 'master', {'$unset': {'{}'.format(name): 1}}})
 		except Exception, e:
 			print "Error removing preference:", e
-			removed = 0
+			pref_id = None
 
-		return removed
+		return pref_id
 
 	def get_preference(self, name):
 
-		return self.preferences.find_one({"name": name})
+		master_prefs = self.preferences.find_one({"_id": master}, {'_id': 0})
+		return master_prefs[name]
 
-	def get_all_preferences(self):
+	def get_master_preferences(self):
 
-		cursor = self.preferences.find()
-		return list(cursor)
+		master_prefs = self.preferences.find_one({'_id': 'master'})
+		if master_prefs is None:
+			master_prefs = {}
+		return master_prefs

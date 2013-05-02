@@ -103,4 +103,8 @@ class UserDAO:
         else:
             return "Password successfully changed"
 
+    def get_roles(self, username):
+
+        return self.users.find_one({'_id': username}, {'roles': 1, '_id': 0})
+
 

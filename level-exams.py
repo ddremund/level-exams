@@ -338,7 +338,7 @@ def delete_saved_test(test_id):
 
     test = saved_tests.get_test(test_id)
     
-    if not test['username'] == username and not username == 'ent-leveling':
+    if not test['username'] == username and ('admin' not in users.get_roles(username)['roles']):
         errors = "Test created by another user"
     else:
         saved_tests.remove_test(test_id)
@@ -348,6 +348,17 @@ def delete_saved_test(test_id):
     tests.sort(key = lambda item: item['timestamp'])
     return bottle.template('saved_tests', dict(username = username, 
                             tests = tests, errors = errors))
+
+@bottle.get('/admin')
+def get_admin():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)['roles']):
+        bottle.redirect("/login")
+
+    return bottle.template('admin_console', dict(username = username, 
+                                                prefs = preferences.get_master_preferences()))
 
 
 @bottle.get('/internal_error')
