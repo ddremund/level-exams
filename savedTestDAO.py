@@ -56,7 +56,7 @@ class SavedTestDAO:
 
 	def get_test(self, test_id):
 
-		return self.saved_tests.find_one({"_id": ObjectId(question_id)})
+		return self.saved_tests.find_one({"_id": ObjectId(test_id)})
 
 	def get_all_tests(self):
 
