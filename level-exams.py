@@ -235,24 +235,24 @@ def post_test_custom():
 		topic_counts[topic] = int(bottle.request.forms.get(topic))
 
 	print "Inserting custom test..."
-	test_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts)
+	template_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts)
 
-	bottle.redirect('/test/{}'.format(test_id))
+	bottle.redirect('/test/{}'.format(template_id))
 
-@bottle.route('/test/remove/<test_id>')
-def remove_test(test_id):
+@bottle.route('/test/remove/<template_id>')
+def remove_test(template_id):
 
 	cookie = bottle.request.get_cookie("session")
 	username = sessions.get_username(cookie)
 	if username is None:
 		bottle.redirect("/login")
 
-	removed = test_types.remove_test_type(test_id)
+	removed = test_types.remove_test_type(template_id)
 	bottle.redirect('/')
 
 
-@bottle.route('/test/<test_id>')
-def create_test(test_id):
+@bottle.route('/test/<template_id>')
+def create_test(template_id):
 
 	#username = 'Derek'
 	cookie = bottle.request.get_cookie("session")
@@ -260,10 +260,10 @@ def create_test(test_id):
 	if username is None:
 		bottle.redirect("/login")
 
-	test_type = test_types.get_test_type(cgi.escape(test_id))
+	test_type = test_types.get_test_type(cgi.escape(template_id))
 
 	print "Generating test..."
-	print "Test ID:", test_id
+	print "Template ID:", template_id
 	print "Type:", test_type
 
 	test_questions = {}
@@ -284,10 +284,22 @@ def create_test(test_id):
 		test_questions[topic] = topic_questions
 	 	test_questions[topic].sort(key= lambda item: min(item['levels']))
 	 	print topic, len(topic_questions)
+	 	
+ 	saved_test_id = saved_tests.insert_test(username, description, level, 
+ 											pct_top, test_questions)
 
 	return bottle.template('test_template', dict(username = username, 
 		description = description, pct_top = pct_top, level = level,
 		questions = test_questions))
+
+@bottle.route('/test/saved/<test_id>')
+def retrieve_test(test_id):
+
+	test = saved_tests.get_test(test_id)
+
+	return bottle.template('test_template', dict(username = test['username'],
+		description = test['template'], pct_top = test['pct_top'], 
+		level = test['level'], qusetions = test['questions']))
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')

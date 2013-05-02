@@ -24,12 +24,12 @@ class SavedTestDAO:
 		self.db = database
 		self.saved_tests = database.saved_tests
 
-	def insert_test(self, user, name, level, pct_top, questions):
+	def insert_test(self, username, description, level, pct_top, questions):
 
 		print "Saving test"
 
-		test = {"user": user,
-				"name": name,
+		test = {"username": user,
+				"template": description,
 				"level": level,
 				"pct_top": pct_top, 
 				"questions": questions}
