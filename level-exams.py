@@ -322,7 +322,7 @@ def retrieve_all_tests():
         bottle.redirect("/login")
 
     tests = saved_tests.get_all_tests()
-    test.sort(key = lambda item: item['timestamp'])
+    tests.sort(key = lambda item: item['timestamp'])
 
     return bottle.template('saved_tests', dict(username = usersname, 
                                             tests = tests))
