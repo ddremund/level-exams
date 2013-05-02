@@ -291,7 +291,7 @@ def create_test(template_id):
         print topic, len(topic_questions)
         
     saved_test_id = saved_tests.insert_test(username, description, level, 
-                                            pct_top, test_questions)
+                                            pct_top, test_questions, timestamp)
 
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = level,
