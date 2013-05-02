@@ -90,4 +90,17 @@ class UserDAO:
 
         return True
 
+    def change_password(self, username, password):
+
+        password_hash = self.make_pw_hash(password)
+
+        try:
+            self.users.update({'_id': username}, 
+                {'$set': {'password': password_hash}})
+        except Exception, e:
+            print "Error updating password", e
+            return "Error changing password"
+        else:
+            return "Password successfully changed"
+
 

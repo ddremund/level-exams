@@ -354,6 +354,33 @@ def delete_saved_test(test_id):
 def present_internal_error():
     return {'error':"System has encountered a DB error"}
 
+@bottle.get('/change_password')
+def get_change_pw():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    return bottle.template('change_password', dict(username = username, 
+                                                    errors = ""))
+
+@bottle.post('/change_password')
+def post_change_pw():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    password = bottle.request.forms.get("new_password")
+    if not validate_password(password):
+        return bottle.template('change_password', dict(username = username, 
+                                                    errors = "Invalid Password"))
+    result = users.change_password(username, password)
+    return bottle.template('change_password', dict(username = username, 
+                                                errors = result))
+
 # displays the initial signup form
 @bottle.get('/signup')
 def present_signup():
@@ -409,7 +436,6 @@ def process_logout():
 
     bottle.response.set_cookie("session", "")
 
-
     bottle.redirect("/login")
 
 @bottle.post('/signup')
@@ -442,6 +468,12 @@ def process_signup():
         print "user did not validate"
         return bottle.template("signup", errors)
 
+def validate_password(password):
+
+    PASS_RE = re.compile(r"^.{3,20}$")
+    if not PASS_RE.match(password):
+        return False
+    return True
 
 # validates that the user information is valid for new signup, return True of False
 # and fills in the error string if there is an issue
