@@ -15,7 +15,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <h1>Enterprise Windows Leveling Test</h1><br />
 Test Template: {{description}}<br />
 Created by: {{username}}<br />
-Timestamp: {{timestsamp}}<br />
+Timestamp: {{timestamp}}<br />
 Level to Attain: {{level}}<br />
 Percentage of questions at top level: {{pct_top}}<br />
 Test permalink: <a href="http://leveling.rstnt.com/test/saved/{{test_id}}">http://leveling.rstnt.com/test/saved/{{test_id}}</a><br />
