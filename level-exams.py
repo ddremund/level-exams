@@ -465,7 +465,7 @@ def process_signup():
 
     signup_enabled = preferences.get_preference('signups')
 
-    if signup_enabled is None or not signups_enabled == 'enabled':
+    if signup_enabled is None or not signup_enabled == 'enabled':
         bottle.redirect("/")
 
     email = bottle.request.forms.get("email")
