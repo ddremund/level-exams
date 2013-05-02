@@ -336,16 +336,18 @@ def delete_saved_test(test_id):
         bottle.redirect("/login")
 
     test = saved_tests.get_test(test_id)
-    tests = saved_tests.get_all_tests()
     
-    tests.sort(key = lambda item: item['timestamp'])
     if not test['username'] == username and not username == 'ent-leveling':
+        tests = saved_tests.get_all_tests()
+        tests.sort(key = lambda item: item['timestamp'])
         return bottle.template('saved_tests', dict(username = username, 
                                 tests = tests, errors = "Test created by another user"))
     else:
         saved_tests.remove_test(test_id)
+        tests = saved_tests.get_all_tests()
+        tests.sort(key = lambda item: item['timestamp'])
         return bottle.template('saved_tests', dict(username = username, 
-                                tests = tests, errors = "Test successfully deleted"))
+                                tests = tests, errors = "Test deleted successfully"))
 
 
 @bottle.get('/internal_error')
