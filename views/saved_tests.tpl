@@ -18,9 +18,9 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 The following tests are frozen exactly as originally generated.
 
 <table border="1">
-	<tr><th>Number</th><th>Template</th><th>Created By</th><th>Timestamp</th><th>Level</th><th>% Top Level Questions</th><th>Permalink</th></tr>
+	<tr><th>Number</th><th>Template</th><th>Created By</th><th>Timestamp</th><th>Level</th><th>% Top Level Questions</th><th>Permalink</th><th>Delete Test</th></tr>
 	%for i, test in enumerate(tests):
-		<tr><td>{{i+1}}</td><td>{{test['template']}}</td><td>{{test['username']}}</td><td>{{test['timestamp']}}</td><td>{{test['level']}}</td><td>{{test['pct_top']}}</td><td><a href="http://leveling.rstnt.com/test/saved/{{test['_id']}}">Test {{i+1}}</a></td></tr>
+		<tr><td>{{i+1}}</td><td>{{test['template']}}</td><td>{{test['username']}}</td><td>{{test['timestamp']}}</td><td>{{test['level']}}</td><td>{{test['pct_top']}}</td><td><a href="http://leveling.rstnt.com/test/saved/{{test['_id']}}">Test {{i+1}}</a></td><td><a href="http://leveling.rstnt.com/test/saved/delete/{{test['_id']}}">Delete Test {{i+1}}</a></td></tr>
 	%end
 </table>
 
