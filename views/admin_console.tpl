@@ -18,6 +18,7 @@ Signups Status: {{prefs.get('signups', "None")}} | <a href="/pref/set/signups/en
 Users:<br />
 <table>
 	%for user in users:
+	<tr><td>Username</td><td>Email</td><td>Admin</td><td>Test Generator</td><td>Template Creator</td><td>Question Writer</td><td>Queston Editor</td><td>Question Deleter</td></tr>
 	<tr><td>{{user['_id']}}</td><td>{{user.get('email', "None provided")}}</td><td>{{str(user['roles'])}}</td></tr>
 	%end
 </table>

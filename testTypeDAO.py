@@ -24,14 +24,15 @@ class TestTypeDAO:
 		self.db = database
 		self.test_types = database.test_types
 
-	def insert_test_type(self, name, pct_top_level, dest_level, topic_counts):
+	def insert_test_type(self, name, pct_top_level, dest_level, topic_counts, username):
 
 		print "Inserting Test Type", name
 
 		test_type = {"name": name,
 					 "dest_level": dest_level,
 					 "pct_top_level": pct_top_level,
-					 "topic_counts": topic_counts}
+					 "topic_counts": topic_counts, 
+					 "username": username}
 
 		try:
 			test_id = self.test_types.insert(test_type)
