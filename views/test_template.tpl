@@ -16,6 +16,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 Test Description: {{description}}<br />
 Created by: {{username}}<br />
 Level to Attain: {{level}}<br />
+Percentage of qustions at top level: {{pct_top}}<br />
 Candidate Name:<br />
 <br /><br />
 
