@@ -180,7 +180,7 @@ def create_test_all():
     if username is None:
         bottle.redirect("/login")
 
-    timestamp = str(datatetime.datetime.now()).split('.')[0]
+    timestamp = str(datetime.datetime.now()).split('.')[0]
     description = "All Questions"
     level = 3
     pct_top = 100
@@ -272,7 +272,7 @@ def create_test(template_id):
 
     test_questions = {}
 
-    timestamp = str(datatetime.datetime.now()).split('.')[0]
+    timestamp = str(datetime.datetime.now()).split('.')[0]
     description = test_type['name']
     level = test_type['dest_level']
     pct_top = test_type['pct_top_level']
