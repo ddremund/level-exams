@@ -13,7 +13,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <a href="/">Home</a>
 
 <h1>Enterprise Windows Leveling Test</h1><br />
-Test Description: {{description}}<br />
+Test Template: {{description}}<br />
 Created by: {{username}}<br />
 Level to Attain: {{level}}<br />
 Percentage of qustions at top level: {{pct_top}}<br />
