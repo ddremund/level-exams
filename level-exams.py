@@ -372,8 +372,8 @@ def post_admin():
     usernames = [user['_id'] for user in users.get_all_users()]
     for username in usernames:
         roles = bottle.request.forms.getall(username)
-        set_roles(username, roles)
-        
+        users.set_roles(username, roles)
+
     bottle.redirect('/admin')
 
 @bottle.route('/pref/set/<name>/<value>')
