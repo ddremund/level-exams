@@ -29,7 +29,7 @@ class PreferenceDAO:
 		print "Updating preference", name, value
 
 		try:
-			pref_id = self.preferences.update({'_id': 'master'}, {'$set': {'{}'.format(name): value}})
+			pref_id = self.preferences.update({'_id': 'master'}, {'$set': {'{}'.format(name): value}}, {'upsert': 1})
 		except Exception, e:
 			print "Error inserting preference:", e
 			pref_id = None
