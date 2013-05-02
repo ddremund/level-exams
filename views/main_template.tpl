@@ -23,7 +23,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 %for test in test_types:
 	<li><a href="/test/{{test['_id']}}">{{test['name']}}</a> | <a href="/test/remove/{{test['_id']}}">Remove</a></li>
 %end
-	<li><a href="/test/custom">Custom Test</a></li>
+	<li><a href="/test/custom">Create New Template</a></li>
 </ul>
 <br />
 

@@ -301,12 +301,31 @@ def create_test(template_id):
 @bottle.route('/test/saved/<test_id>')
 def retrieve_test(test_id):
 
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
     test = saved_tests.get_test(test_id)
 
     return bottle.template('test_template', dict(username = test['username'],
         description = test['template'], pct_top = test['pct_top'], 
         level = test['level'], questions = test['questions'], 
         test_id = test_id, timestamp = test['timestamp']))
+
+@bottle.route('/test/saved/all')
+def retrieve_all_tests():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    tests = saved_tests.get_all_tests()
+    test.sort(key = lambda item: item['timestamp'])
+
+    return bottle.template('saved_tests', dict(username = usersname, 
+                                            tests = tests))
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')
