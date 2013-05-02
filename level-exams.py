@@ -360,6 +360,16 @@ def get_admin():
     return bottle.template('admin_console', dict(username = username, 
                                                 prefs = preferences.get_master_preferences()))
 
+@bottle.route('/pref/set/<name>/<value>')
+def set_pref(name, value):
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)['roles']):
+        bottle.redirect("/login")
+
+    preferences.set_preference(name, value)
+    return bottle.redirect('/admin')
 
 @bottle.get('/internal_error')
 @bottle.view('error_template')
@@ -453,9 +463,9 @@ def process_logout():
 @bottle.post('/signup')
 def process_signup():
 
-    signup_enabled = False
+    signup_enabled = preferences.get_preference('signups')
 
-    if signup_enabled == False:
+    if signup_enabled is None or not signups_enabled == 'enabled':
         bottle.redirect("/")
 
     email = bottle.request.forms.get("email")
