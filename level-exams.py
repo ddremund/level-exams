@@ -324,7 +324,7 @@ def retrieve_all_tests():
     tests = saved_tests.get_all_tests()
     tests.sort(key = lambda item: item['timestamp'])
 
-    return bottle.template('saved_tests', dict(username = usersname, 
+    return bottle.template('saved_tests', dict(username = username, 
                                             tests = tests))
 
 @bottle.get('/internal_error')
