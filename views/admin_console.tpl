@@ -25,7 +25,7 @@ Users:<br />
 	%end
 	%for user in users:
 	<tr><td>{{user['_id']}}</td><td>{{user.get('email', "None provided")}}</td>
-		%for role in prefs['roles']
+		%for role in prefs['roles']:
 			%if role in user['roles']:
 			<td><input type="checkbox" name="{{user['_id']}}" value="{{role}}" checked/></td>
 			%else:
