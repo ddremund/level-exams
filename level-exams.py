@@ -418,7 +418,8 @@ def get_admin():
 
     return bottle.template('admin_console', dict(username = username, 
                             users = users.get_all_users(), 
-                            prefs = preferences.get_master_preferences()))
+                            prefs = preferences.get_master_preferences(),
+                            errors = ""))
 
 @bottle.post('/admin')
 def post_admin():
@@ -434,6 +435,27 @@ def post_admin():
         users.set_roles(username, roles)
 
     bottle.redirect('/admin')
+
+@bottle.post('/admin/change_password')
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)):
+        bottle.redirect("/login")
+    username = bottle.request.forms.get('username')
+    password = bottle.request.forms.get('password')
+
+    if not validate_password(password):
+        return bottle.template('admin_console', dict(username = username, 
+                            users = users.get_all_users(), 
+                            prefs = preferences.get_master_preferences(),
+                            errors = "Invalid Password"))
+
+    result = users.change_password(username, password)
+    return bottle.template('admin_console', dict(username = username, 
+                            users = users.get_all_users(), 
+                            prefs = preferences.get_master_preferences(),
+                            errors = result))
 
 @bottle.route('/pref/set/<name>/<value>')
 def set_pref(name, value):

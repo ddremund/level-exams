@@ -11,6 +11,8 @@
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
  | <a href="/">Home</a>
+ 
+ <br />{{errors}}
 
 <h1>Admin Console</h1>
 
@@ -46,6 +48,18 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 		<tr><td>Verify Password:</td><td><input type="password" name="verify"/></td></tr>
 	</table>
 	<input type="submit" value="Create User"/>
+</form>
+<br /><br />
+<b>Reset Password:</b>
+<form action="/admin/reset_password" method="POST">
+	Username: 
+	<select name="username">
+		%for user in users:
+		<option value="{{user}}" />
+		%end
+	</select>
+	Password: <input type="password" name="password" /><br />
+	<input type="submit" value="Change Password" />
 </form>
 
 </body>
