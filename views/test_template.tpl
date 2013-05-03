@@ -35,9 +35,9 @@ Candidate Name:<br />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
 	%for i, question in enumerate(questions[topic]):
-	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br />
+	<li><span id="{{topic}}-{{i + 1}}"><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}</span><br />
 	%if len(question['image_urls']) > 0:
-	<span id="{{topic}}-{{i + 1}}">Image URLs: {{'<a href="#{}-image-{}">{}</a> '.format(topic, i + 1, url)  for url in question['image_urls']}}</span><br />
+	Image URLs: {{!'<a href="#{}-image-{}">{}</a> '.format(topic, i + 1, url)  for url in question['image_urls']}}<br />
 	%end
 	<br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
