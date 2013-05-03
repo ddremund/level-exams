@@ -38,8 +38,8 @@ Candidate Name:<br />
 	<li><span id="{{topic}}-{{i + 1}}"><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}</span><br />
 	%if len(question['image_urls']) > 0:
 	Image URLs: 
-	%for url in question['image_urls']:
-	<a href="#{{topic}}-image-{{i + 1}}">{{url}} </a> 
+	%for j, url in enumerate(question['image_urls']):
+	<a href="#{{topic}}-image-{{j + 1}}">{{url}} </a> 
 	%end
 	<br />
 	%end
@@ -54,7 +54,7 @@ Images:<br /><br />
 %for topic in sorted_topics:
 	%for i, question in enumerate(questions[topic]):
 		%for j, url in enumerate(question["image_urls"]):
-			<span id="{{topic}}-image-{{i + 1}}">Image {{j + 1}} for <a href="#{{topic}}-{{i + 1}}">{{topic}} question #{{i + 1}}</a>: <a href="{{url}}">{{url}}</a></span><br /><br />
+			<span id="{{topic}}-image-{{j + 1}}">Image {{j + 1}} for <a href="#{{topic}}-{{i + 1}}">{{topic}} question #{{i + 1}}</a>: <a href="{{url}}">{{url}}</a></span><br /><br />
 			<img src="{{!url}}" /><br /><br /><br />
 		%end
 	%end
