@@ -436,8 +436,8 @@ def post_admin():
 
     bottle.redirect('/admin')
 
-@bottle.post('/admin/change_password')
-def post_admin_change_password():
+@bottle.post('/admin/reset_password')
+def post_admin_reset_password():
 
     cookie = bottle.request.get_cookie("session")
     username = sessions.get_username(cookie)
