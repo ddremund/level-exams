@@ -24,7 +24,7 @@ Candidate Name:<br />
 
 <table>
 	<tr align="left"><th>Topic</th><th>Questions</th></tr>
-	%for topic in questions.keys():
+	%for topic in sorted_topics:
 	<tr><td>{{topic}}</td><td>{{len(questions[topic])}}</td></tr>
 	%end
 	<tr><td>Total</td><td>{{sum(len(q) for q in questions.values())}}</td></tr>
