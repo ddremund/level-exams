@@ -287,7 +287,7 @@ def remove_test(template_id):
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to delete templates."))
 
-    template = get_test_type(template_id)
+    template = test_types.get_test_type(template_id)
     if not template['username'] == username and 'admin' not in roles:
         return bottle.template('generic_error', 
             dict(error = "Template created by another user."))
