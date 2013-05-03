@@ -387,7 +387,7 @@ def delete_saved_test(test_id):
         bottle.redirect("/login")
 
     roles = users.get_roles(username)
-    if 'admin' not in roles and 'test-generator' not in roles:
+    if 'admin' not in roles and 'test-deleter' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to delete saved tests."))
 
