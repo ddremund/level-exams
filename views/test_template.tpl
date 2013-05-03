@@ -34,10 +34,10 @@ Candidate Name:<br />
 <hr />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
-	%for question in questions[topic]:
+	%for i, question in enumerate(questions[topic]):
 	<li><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}<br />
 	%if len(question['image_urls']) > 0:
-	Image URLs: {{', '.join(question['image_urls'])}}<br />
+	<span id="{{topic}}-{{i + 1}}">Image URLs: {{'<a href="#{}-image-{}">{}</a> '.format(topic, i + 1, url)  for url in question['image_urls']}}</span><br />
 	%end
 	<br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
@@ -47,10 +47,10 @@ Candidate Name:<br />
 <hr />
 <br />
 Images:<br /><br />
-%for topic in questions.keys():
+%for topic in sorted_topics:
 	%for i, question in enumerate(questions[topic]):
 		%for j, url in enumerate(question["image_urls"]):
-			Image {{j + 1}} for {{topic}} question #{{i + 1}}: {{url}}<br /><br />
+			<span id="{{topic}}-image-{{i + 1}}">Image {{j + 1}} for <a href="#{{topic}}-{{i + 1}}">{{topic}} question #{{i + 1}}</a>: {{url}}</span><br /><br />
 			<img src="{{!url}}" /><br /><br /><br />
 		%end
 	%end
