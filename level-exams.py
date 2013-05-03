@@ -222,10 +222,12 @@ def create_test_all():
 
         test_questions[topic].sort(key= lambda item: min(item['levels']))
 
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(topics, key= lambda item: topic_order.get(item, 10000))
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = "All",
         test_id = "not applicable", questions = test_questions, 
-        timestamp = timestamp))
+        timestamp = timestamp, sorted_topics = sorted_topics))
 
 @bottle.get('/test/custom')
 def get_test_custom():
@@ -362,10 +364,14 @@ def retrieve_test(test_id):
 
     test = saved_tests.get_test(test_id)
 
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(test['questions'].keys(), key= lambda item: topic_order.get(item, 10000))
+
     return bottle.template('test_template', dict(username = test['username'],
         description = test['template'], pct_top = test['pct_top'], 
         level = test['level'], questions = test['questions'], 
-        test_id = test_id, timestamp = test['timestamp']))
+        test_id = test_id, timestamp = test['timestamp'], 
+        sorted_topics = sorted_topics))
 
 @bottle.route('/test/saved/all')
 def retrieve_all_tests():
