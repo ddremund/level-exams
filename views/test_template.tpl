@@ -30,7 +30,7 @@ Candidate Name:<br />
 	<tr><td>Total</td><td>{{sum(len(q) for q in questions.values())}}</td></tr>
 </table>
 
-%for topic in indexed_topics:
+%for topic in sorted_topics:
 <hr />
 <h3>{{topic}} - {{len(questions[topic])}} questions</h3>
 <ol>
