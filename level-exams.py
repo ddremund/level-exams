@@ -340,7 +340,7 @@ def create_test(template_id):
                                             pct_top, test_questions, timestamp)
 
     topic_order = preferences.get_preference("topic_order")
-    sorted_topics = sorted(topics.keys(), key= lambda item: topic_order.get(item, 100))
+    sorted_topics = sorted(topics.keys(), key= lambda item: topic_order.get(item, 10000))
 
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = level,
