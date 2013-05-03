@@ -287,6 +287,11 @@ def remove_test(template_id):
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to delete templates."))
 
+    template = get_test_type(template_id)
+    if not template['username'] == username and 'admin' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "Template created by another user."))
+
     removed = test_types.remove_test_type(template_id)
     bottle.redirect('/')
 
@@ -389,11 +394,11 @@ def delete_saved_test(test_id):
     test = saved_tests.get_test(test_id)
     
     roles = users.get_roles(username)
-    if 'admin' not in roles and 'test-deleter' not in roles:
-        errors = "User does not have permission to delete saved tests"
+    if not test['username'] == username and 'admin' not in roles:
+            errors = "Test created by another user" 
     else: 
-        if not test['username'] == username and 'admin' not in roles:
-            errors = "Test created by another user"
+        if 'admin' not in roles and 'test-deleter' not in roles:
+            errors = "User does not have permission to delete saved tests"
         else:
             saved_tests.remove_test(test_id)
             errors = "Test deleted successfully"
