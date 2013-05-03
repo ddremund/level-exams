@@ -114,6 +114,5 @@ class UserDAO:
 
     def get_all_users(self):
 
-        return self.users.find()
-
-
+        cursor = self.users.find()
+        return list(cursor)

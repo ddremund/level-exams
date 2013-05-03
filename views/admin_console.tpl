@@ -24,7 +24,6 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	<th>{{role}}</th>
 	%end
 	</tr>
-	%len(users)
 	%for user in users:
 	<tr><td>{{user['_id']}}</td><td>{{user.get('email', "None provided")}}</td>
 		%for role in prefs['roles']:
@@ -55,7 +54,6 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <form action="/admin/reset_password" method="POST">
 	Username: 
 	<select name="username">
-		%len(users)
 		%for user in users:
 		<option value="{{user['_id']}}">{{user['_id']}}</option>
 		%end
