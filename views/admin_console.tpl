@@ -11,7 +11,7 @@
 Welcome {{username}}	<a href="/logout">Logout</a>
 %end
  | <a href="/">Home</a>
- 
+
  <br />{{errors}}
 
 <h1>Admin Console</h1>
@@ -55,7 +55,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	Username: 
 	<select name="username">
 		%for user in users:
-		<option value="{{user}}" />
+		<option value="{{user['_id']}}">{{user['_id']}}
 		%end
 	</select>
 	Password: <input type="password" name="password" /><br />
