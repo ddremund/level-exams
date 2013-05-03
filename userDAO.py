@@ -79,6 +79,7 @@ class UserDAO:
         if email != "":
             user['email'] = email
 
+        print "Creating user", username
         try:
             self.users.insert(user, safe=True)
         except pymongo.errors.OperationFailure:
