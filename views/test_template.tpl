@@ -54,7 +54,7 @@ Images:<br /><br />
 %for topic in sorted_topics:
 	%for i, question in enumerate(questions[topic]):
 		%for j, url in enumerate(question["image_urls"]):
-			<span id="{{topic}}-image-{{i + 1}}">Image {{j + 1}} for <a href="#{{topic}}-{{i + 1}}">{{topic}} question #{{i + 1}}</a>: {{url}}</span><br /><br />
+			<span id="{{topic}}-image-{{i + 1}}">Image {{j + 1}} for <a href="#{{topic}}-{{i + 1}}">{{topic}} question #{{i + 1}}</a>: <a href="{{url}}">{{url}}</a></span><br /><br />
 			<img src="{{!url}}" /><br /><br /><br />
 		%end
 	%end
