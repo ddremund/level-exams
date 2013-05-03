@@ -37,7 +37,11 @@ Candidate Name:<br />
 	%for i, question in enumerate(questions[topic]):
 	<li><span id="{{topic}}-{{i + 1}}"><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}</span><br />
 	%if len(question['image_urls']) > 0:
-	Image URLs: {{!'<a href="#{}-image-{}">{}</a> '.format(topic, i + 1, url)  for url in question['image_urls']}}<br />
+	Image URLs: 
+	%for url in question['image_urls']:
+	<a href="#{{topic}}-image-{{i + 1}}">{{url}} </a> 
+	%end
+	<br />
 	%end
 	<br /><b>A:</b> {{!"<br />".join(question['answer'].split('\n'))}}<br /><a href="/question/{{question['_id']}}">Edit Question</a> | <a href="/question/remove/{{question['_id']}}">Delete Question from Database</a><br /><b>Notes:</b> <br /><br /><br /><br /><br /></li>
 	%end
