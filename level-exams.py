@@ -157,6 +157,7 @@ def post_editquestion(question_id):
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'question-editor' not in roles:
         errors = "User does not have permission to edit questions."
         return bottle.template("edit_question", dict(username = username, topics = topics, 
@@ -199,6 +200,7 @@ def create_test_all():
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'test-generator' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to generate tests."))
@@ -252,6 +254,7 @@ def post_test_custom():
     pct_lower = bottle.request.forms.get("pct_lower")
     dest_level = bottle.request.forms.get("dest_level")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'template-creator' not in roles:
         errors = "User does not have permission to create templates."
         return bottle.template("custom_test", dict(username = username, errors = errors, 
@@ -279,6 +282,7 @@ def remove_test(template_id):
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'template-deleter' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to delete templates."))
@@ -296,6 +300,7 @@ def create_test(template_id):
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'test-generator' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to generate tests."))
@@ -342,6 +347,7 @@ def retrieve_test(test_id):
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'test-generator' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to view saved tests."))
@@ -361,6 +367,7 @@ def retrieve_all_tests():
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'test-generator' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to view saved tests."))
@@ -379,6 +386,7 @@ def delete_saved_test(test_id):
     if username is None:
         bottle.redirect("/login")
 
+    roles = users.get_roles(username)
     if 'admin' not in roles and 'test-generator' not in roles:
         return bottle.template('generic_error', 
             dict(error = "User does not have permission to delete saved tests."))
