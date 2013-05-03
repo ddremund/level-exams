@@ -339,10 +339,13 @@ def create_test(template_id):
     saved_test_id = saved_tests.insert_test(username, description, level, 
                                             pct_top, test_questions, timestamp)
 
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(topics.keys(), key= lambda item: topic_order.get(item, 100))
+
     return bottle.template('test_template', dict(username = username, 
         description = description, pct_top = pct_top, level = level,
         questions = test_questions, test_id = saved_test_id, 
-        timestamp = timestamp))
+        timestamp = timestamp, sorted_topics = sorted_topics))
 
 @bottle.route('/test/saved/<test_id>')
 def retrieve_test(test_id):
