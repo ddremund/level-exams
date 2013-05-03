@@ -391,11 +391,12 @@ def delete_saved_test(test_id):
     roles = users.get_roles(username)
     if 'admin' not in roles and 'test-deleter' not in roles:
         errors = "User does not have permission to delete saved tests"
-    if not test['username'] == username and 'admin' not in roles:
-        errors = "Test created by another user"
-    else:
-        saved_tests.remove_test(test_id)
-        errors = "Test deleted successfully"
+    else: 
+        if not test['username'] == username and 'admin' not in roles:
+            errors = "Test created by another user"
+        else:
+            saved_tests.remove_test(test_id)
+            errors = "Test deleted successfully"
         
     tests = saved_tests.get_all_tests()
     tests.sort(key = lambda item: item['timestamp'])
