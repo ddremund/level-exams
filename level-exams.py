@@ -74,6 +74,13 @@ def post_newquestion():
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
 
+    roles = users.get_roles(username)
+    if 'admin' not in roles and 'question-writer' not in roles:
+        errors = "User does not have permission to create questions."
+        return bottle.template("new_question", dict(username = username, topics = topics, 
+            selected_topic = topic, new_topic = new_topic, errors = errors, question = question, 
+            answer = answer, levels = levels, image_urls = image_urls))
+
     if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
         errors = "Question must have question text, answer, topic, and associated levels."
         return bottle.template("new_question", dict(username = username, topics = topics, 
@@ -107,6 +114,11 @@ def remove_question(question_id):
     username = sessions.get_username(cookie)
     if username is None:
         bottle.redirect("/login")
+
+    roles = users.get_roles(username)
+    if 'admin' not in roles and 'question-deleter' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permssion to delete questions."))
 
     removed = questions.remove_question(question_id)
     bottle.redirect('/test/all')
@@ -145,6 +157,12 @@ def post_editquestion(question_id):
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
 
+    if 'admin' not in roles and 'question-editor' not in roles:
+        errors = "User does not have permission to edit questions."
+        return bottle.template("edit_question", dict(username = username, topics = topics, 
+            question_id = question_id, selected_topic = topic, new_topic = new_topic, 
+            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
+
     if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
         errors = "Question must have question text, answer, topic, and associated levels."
         return bottle.template("edit_question", dict(username = username, topics = topics, 
@@ -180,6 +198,10 @@ def create_test_all():
     username = sessions.get_username(cookie)
     if username is None:
         bottle.redirect("/login")
+
+    if 'admin' not in roles and 'test-generator' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to generate tests."))
 
     timestamp = str(datetime.datetime.now()).split('.')[0]
     description = "All Questions"
@@ -230,6 +252,11 @@ def post_test_custom():
     pct_lower = bottle.request.forms.get("pct_lower")
     dest_level = bottle.request.forms.get("dest_level")
 
+    if 'admin' not in roles and 'template-creator' not in roles:
+        errors = "User does not have permission to create templates."
+        return bottle.template("custom_test", dict(username = username, errors = errors, 
+            name = name, pct_lower = pct_lower, selected_level = dest_level, topics = topics))
+
     if name == "" or pct_lower == "" or dest_level == "":
         errors = "Custom test must have values for all options."
         return bottle.template("custom_test", dict(username = username, errors = errors, 
@@ -239,7 +266,7 @@ def post_test_custom():
     for topic in topics:
         topic_counts[topic] = int(bottle.request.forms.get(topic))
 
-    print "Inserting custom test..."
+    print "Inserting custom template..."
     template_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts, username)
 
     bottle.redirect('/test/{}'.format(template_id))
@@ -251,6 +278,10 @@ def remove_test(template_id):
     username = sessions.get_username(cookie)
     if username is None:
         bottle.redirect("/login")
+
+    if 'admin' not in roles and 'template-deleter' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to delete templates."))
 
     removed = test_types.remove_test_type(template_id)
     bottle.redirect('/')
@@ -264,6 +295,10 @@ def create_test(template_id):
     username = sessions.get_username(cookie)
     if username is None:
         bottle.redirect("/login")
+
+    if 'admin' not in roles and 'test-generator' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to generate tests."))
 
     test_type = test_types.get_test_type(cgi.escape(template_id))
 
@@ -307,6 +342,10 @@ def retrieve_test(test_id):
     if username is None:
         bottle.redirect("/login")
 
+    if 'admin' not in roles and 'test-generator' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to view saved tests."))
+
     test = saved_tests.get_test(test_id)
 
     return bottle.template('test_template', dict(username = test['username'],
@@ -322,6 +361,10 @@ def retrieve_all_tests():
     if username is None:
         bottle.redirect("/login")
 
+    if 'admin' not in roles and 'test-generator' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to view saved tests."))
+
     tests = saved_tests.get_all_tests()
     tests.sort(key = lambda item: item['timestamp'])
 
@@ -335,6 +378,10 @@ def delete_saved_test(test_id):
     username = sessions.get_username(cookie)
     if username is None:
         bottle.redirect("/login")
+
+    if 'admin' not in roles and 'test-generator' not in roles:
+        return bottle.template('generic_error', 
+            dict(error = "User does not have permission to delete saved tests."))
 
     test = saved_tests.get_test(test_id)
     
@@ -424,8 +471,8 @@ def post_change_pw():
 def present_signup():
     return bottle.template("signup",
                            dict(username="", password="",
-                                password_error="",
-                                email="", username_error="", email_error="",
+                                password_error="", email="", 
+                                username_error="", email_error="",
                                 verify_error =""))
 
 # displays the initial login form
@@ -495,7 +542,7 @@ def process_signup():
 
         if not users.add_user(username, password, email):
             # this was a duplicate
-            errors['username_error'] = "Username already in use. Please choose another"
+            errors['username_error'] = "Username already in use. Please choose another."
             return bottle.template("signup", errors)
 
         session_id = sessions.start_session(username)
