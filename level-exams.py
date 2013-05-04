@@ -427,9 +427,15 @@ def get_admin():
     if username is None or ('admin' not in users.get_roles(username)):
         bottle.redirect("/login")
 
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = [(topic, topic_order.get(topic, 1000)) for topic in topics]
+    sorted_topics.sort(key= lambda item: item[1])
+
     return bottle.template('admin_console', dict(username = username, 
                             users = users.get_all_users(), 
                             prefs = preferences.get_master_preferences(),
+                            sorted_topics = sorted_topics, 
                             errors = ""))
 
 @bottle.post('/admin')
@@ -457,17 +463,35 @@ def post_admin_reset_password():
     username = bottle.request.forms.get('username')
     password = bottle.request.forms.get('password')
 
-    if not validate_password(password):
-        return bottle.template('admin_console', dict(username = username, 
-                            users = users.get_all_users(), 
-                            prefs = preferences.get_master_preferences(),
-                            errors = "Invalid Password"))
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = [(topic, topic_order.get(topic, 1000)) for topic in topics]
+    sorted_topics.sort(key= lambda item: item[1])
 
-    result = users.change_password(username, password)
+    if not validate_password(password):
+        errors = "Invalid Password"
+    else:
+        errors = users.change_password(username, password)
     return bottle.template('admin_console', dict(username = username, 
                             users = users.get_all_users(), 
                             prefs = preferences.get_master_preferences(),
-                            errors = result))
+                            sorted_topics = sorted_topics, 
+                            errors = errors))
+
+@bottle.post('/admin/sort_order')
+def post_admin_set_sort_order():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)):
+        bottle.redirect('/login')
+
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    for topic in topics:
+        topic_order[topic] = int(bottle.request.forms.get(topic, 0))
+    preferences.set_preference("topic_order", topic_order)
+    bottle.redirect('/admin')
 
 @bottle.route('/pref/set/<name>/<value>')
 def set_pref(name, value):
@@ -475,7 +499,7 @@ def set_pref(name, value):
     cookie = bottle.request.get_cookie("session")
     username = sessions.get_username(cookie)
     if username is None or ('admin' not in users.get_roles(username)):
-        bottle.redirect("/login")
+        bottle.redirect('/login')
 
     preferences.set_preference(name, value)
     return bottle.redirect('/admin')

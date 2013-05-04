@@ -28,9 +28,9 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	<tr><td>{{user['_id']}}</td><td>{{user.get('email', "None provided")}}</td>
 		%for role in prefs['roles']:
 			%if role in user['roles']:
-			<td><input type="checkbox" name="{{user['_id']}}" value="{{role}}" checked/></td>
+			<td align="center"><input type="checkbox" name="{{user['_id']}}" value="{{role}}" checked/></td>
 			%else:
-			<td><input type="checkbox" name="{{user['_id']}}" value="{{role}}" /></td>
+			<td align="center"><input type="checkbox" name="{{user['_id']}}" value="{{role}}" /></td>
 			%end
 		%end
 	</tr>
@@ -60,6 +60,16 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	</select>
 	Password: <input type="password" name="password" /><br />
 	<input type="submit" value="Change Password" />
+</form>
+<br /><br />
+<b>Topic Sort Order:</b>
+<form action="/admin/sort_order" method="POST">
+	<table>
+	%for topic in sorted_topics:
+	<tr><td>{{topic[0]}}: </td><td><input type="text" name="{{topic[0]}}" value="{{topic[1]}}" /></td></tr>
+	%end
+	</table>
+	<input type="submit" value="Set Topic Order" />
 </form>
 
 </body>
