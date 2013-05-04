@@ -14,7 +14,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 
 <br />{{errors}}
 
-<h1>Create Custom Test</h1>
+<h1>Create Custom Test Template</h1>
 <form action = "/test/custom" method="POST">
 	<h2>Target Level</h2>
 	<select name="dest_level">
@@ -34,7 +34,7 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 		<tr><td>{{topic}}:</td><td><input type="text" name="{{topic}}"</td></tr>
 		%end
 	</table>
-	<br /><input type="submit" />
+	<br /><input type="submit" value="Create Template"/>
 </form>
 
 </body>

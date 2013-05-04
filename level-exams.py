@@ -238,9 +238,11 @@ def get_test_custom():
         bottle.redirect("/login")
 
     topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(topics, key= lambda item: topic_order.get(item, 10000))
 
     return bottle.template("custom_test", dict(username = username, errors = "", 
-        name = "", pct_lower = "", selected_level = "", topics = topics))
+        name = "", pct_lower = "", selected_level = "", topics = sorted_topics))
 
 @bottle.post('/test/custom')
 def post_test_custom():
@@ -645,4 +647,4 @@ sessions = sessionDAO.SessionDAO(database)
 preferences = preferenceDAO.PreferenceDAO(database)
 
 #bottle.debug(True)
-bottle.run(host='leveling.rstnt.com', port=80)
+bottle.run(host='localhost', port=80)
