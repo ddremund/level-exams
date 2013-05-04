@@ -265,7 +265,7 @@ def post_test_custom():
             name = name, pct_lower = pct_lower, selected_level = dest_level, topics = topics))
 
     if name == "" or pct_lower == "" or dest_level == "":
-        errors = "Custom test must have values for all options."
+        errors = "Custom test template must have values for all options."
         return bottle.template("custom_test", dict(username = username, errors = errors, 
             name = name, pct_lower = pct_lower, selected_level = dest_level, topics = topics))
 
