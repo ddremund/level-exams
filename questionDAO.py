@@ -77,6 +77,11 @@ class QuestionDAO:
 
 		return self.questions.find_one({"_id": ObjectId(question_id)})
 
+	def get_questions_for_topic(self, topic):
+
+		cursor = self.questions.find({"topic": topic})
+		return list(cursor)
+
 	def get_questions(self, topic, level, num_questions = 0, dup_ids = []):
 
 		if num_questions == 0:

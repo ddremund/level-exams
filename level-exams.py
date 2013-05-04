@@ -38,8 +38,16 @@ def site_index():
     if username is None:
         bottle.redirect("/login")
 
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    question_counts = [(topic, 
+                        len(questions.get_questions_for_topic(topic)), 
+                        len(questions.get_questions(topic, '1')),
+                        len(questions.get_questions(topic, '2')),
+                        len(questions.get_questions(topic, '3'))) for topic in sorted(topics, key= lambda item: topic_order.get(item, 10000))]
+
     return bottle.template('main_template', dict(username = username, 
-        test_types = test_types.get_test_types()))
+        question_counts = question_counts, test_types = test_types.get_test_types()))
 
 @bottle.get('/newquestion')
 def get_newquestion():
@@ -274,7 +282,8 @@ def post_test_custom():
         topic_counts[topic] = int(bottle.request.forms.get(topic))
 
     print "Inserting custom template..."
-    template_id = test_types.insert_test_type(name, 100 - int(pct_lower), int(dest_level), topic_counts, username)
+    template_id = test_types.insert_test_type(name, 100 - int(pct_lower), 
+        int(dest_level), topic_counts, username)
 
     bottle.redirect('/test/{}'.format(template_id))
 

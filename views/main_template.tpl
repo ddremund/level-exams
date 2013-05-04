@@ -13,6 +13,13 @@ Welcome {{username}}	<a href="/logout">Logout</a> | <a href="/change_password">C
 
 <h1>Enterprise Windows Leveling Test Generator</h1>
 
+<b>Questions in Database:</b>
+<table>
+	%for topic, count, l1, l2, l3 in question_counts:
+	<tr><td>{{topic}}: </td><td>{{count}} </td><td>(L1: {{l1}}, L2: {{l2}}, L3: {{l3}})</td></tr>
+	%end
+</table>
+<br />
 <a href="/newquestion"><b>Add Question to the Database</b></a><br />
 <a href="/test/all"><b>View all questions</b></a><br />
 <a href="/test/saved/all"><b>List of all saved tests</b></a><br /><br />
