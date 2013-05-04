@@ -1,3 +1,5 @@
+#!/bin/sh
+
 mongoexport --db leveling --collection test_types -o ~/test_types-backup.json
 mongoexport --db leveling --collection saved_tests -o ~/saved_tests-backup.json
 mongoexport --db leveling --collection users -o ~/users-backup.json
