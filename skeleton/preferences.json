@@ -1,0 +1,1 @@
+{ "_id" : "master", "roles" : [ "admin", "test-generator", "test-viewer", "test-deleter", "template-creator", "template-editor", "template-deleter", "question-writer", "question-editor", "question-deleter" ], "signups" : "disabled", "topic_order" : {  } }
