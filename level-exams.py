@@ -278,6 +278,59 @@ def post_test_custom():
 
     bottle.redirect('/test/{}'.format(template_id))
 
+@bottle.get('/test/custom/<template_id>')
+def get_test_custom_edit(template_id):
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(topics, key= lambda item: topic_order.get(item, 10000))
+
+    template = test_types.get_test_type(template_id)
+
+    return bottle.template("edit_template", dict(username = username, 
+        errors = "", name = template['name'], template_id = template_id, 
+        pct_lower = 100 - int(template['pct_top_level']), 
+        selected_level = int(template['dest_level']), topics = sorted_topics, 
+        topic_counts = template['topic_counts']))
+
+@bottle.post('/test/custom/<template_id>')
+def post_test_custom_edit(template_id):
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None:
+        bottle.redirect("/login")
+
+    name = bottle.request.forms.get("name")
+    pct_lower = bottle.request.forms.get("pct_lower")
+    dest_level = bottle.request.forms.get("dest_level")
+
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = sorted(topics, key= lambda item: topic_order.get(item, 10000))
+
+    topic_counts = {}
+    for topic in topics:
+        topic_counts[topic] = int(bottle.request.forms.get(topic))
+
+    roles = users.get_roles(username)
+    if 'admin' not in roles and 'template-editor' not in roles:
+        errors = "User does not have permission to edit templates."
+    else:
+        test_types.update_test_type(template_id, name, 100 - int(pct_lower), 
+            dest_level, topic_counts)
+        errors = "Template updated."
+
+    return bottle.template("edit_template", dict(username = username, 
+        errors = errors, name = name, pct_lower = pct_lower, 
+        selected_level = int(dest_level), topics = sorted_topics, 
+        topic_counts = topic_counts, template_id = template_id))
+
 @bottle.route('/test/remove/<template_id>')
 def remove_test(template_id):
 

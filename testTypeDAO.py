@@ -54,6 +54,23 @@ class TestTypeDAO:
 
 		return removed
 
+	def update_test_type(self, type_id, name, pct_top_level, dest_level, topic_counts):
+
+		print "Updating Test Type", type_id
+
+		fields = {"name": name,
+				  "dest_level": dest_level,
+				  "pct_top_level": pct_top_level,
+				  "topic_counts": topic_counts}
+		try:
+			updated = self.test_types.update({'_id': ObjectId(type_id)}, 
+				{"$set": fields})
+		except Exception, e:
+			print "Error updating test type:", e
+			updated = None
+			
+		return updated
+
 	def get_test_types(self):
 
 		cursor = self.test_types.find()

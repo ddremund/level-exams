@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Create Custom Test</title>
+<title>Create Custom Test Template</title>
 </head>
 <body>
 
@@ -26,12 +26,12 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 			%end
 		%end
 	</select>
-	<h2>Description: </h2><input type="text" name="name" />
-	<h2>Percentage of questions to take from level minus one: </h2><input type="text" name="pct_lower" />
+	<h2>Description: </h2><input type="text" name="name" value="{{name}}"/>
+	<h2>Percentage of questions to take from level minus one: </h2><input type="text" name="pct_lower" value="{{pct_lower}}"/>
 	<h2>Target Question Counts</h2>
 	<table>
 		%for topic in topics:
-		<tr><td>{{topic}}:</td><td><input type="text" name="{{topic}}"</td></tr>
+		<tr><td>{{topic}}:</td><td><input type="text" name="{{topic}}" /></td></tr>
 		%end
 	</table>
 	<br /><input type="submit" value="Create Template"/>
