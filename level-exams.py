@@ -81,6 +81,9 @@ def post_newquestion():
     new_topic = bottle.request.forms.get("new_topic")
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
+    for url in image_urls:
+        if url = "":
+            del(url)
 
     roles = users.get_roles(username)
     if 'admin' not in roles and 'question-writer' not in roles:
@@ -164,6 +167,9 @@ def post_editquestion(question_id):
     new_topic = bottle.request.forms.get("new_topic")
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
+    for url in image_urls:
+        if url = "":
+            del(url)
 
     roles = users.get_roles(username)
     if 'admin' not in roles and 'question-editor' not in roles:
