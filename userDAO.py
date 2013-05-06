@@ -96,7 +96,7 @@ class UserDAO:
         print "Removing user", username
 
         try:
-            self.users.remove({'_id:', username})
+            self.users.remove({'_id': username})
         except Exception, e:
             print 'Error removing user:', e
             return False
