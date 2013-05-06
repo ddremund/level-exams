@@ -25,14 +25,14 @@ Candidate Name:<br />
 <table>
 	<tr align="left"><th>Topic</th><th>Questions</th></tr>
 	%for topic in sorted_topics:
-	<tr><td>{{topic}}</td><td>{{len(questions[topic])}}</td></tr>
+	<tr><td><a href="#{{topic}}">{{topic}}</a></td><td>{{len(questions[topic])}}</td></tr>
 	%end
 	<tr><td>Total</td><td>{{sum(len(q) for q in questions.values())}}</td></tr>
 </table>
 
 %for topic in sorted_topics:
 <hr />
-<h3>{{topic}} - {{len(questions[topic])}} questions</h3>
+<h3><span id="{{topic}}">{{topic}} - {{len(questions[topic])}} questions</span></h3>
 <ol>
 	%for i, question in enumerate(questions[topic]):
 	<li><span id="{{topic}}-{{i + 1}}"><b>Q:</b> [Level {{'/'.join(question['levels'])}}] {{!"<br />".join(question['question'].split('\n'))}}</span><br />
