@@ -18,6 +18,7 @@ Welcome {{username}}	<a href="/logout">Logout</a> | <a href="/change_password">C
 	%for topic, count, l1, l2, l3 in question_counts:
 	<tr><td>{{topic}}: </td><td>{{count}} </td><td>(L1: {{l1}}, L2: {{l2}}, L3: {{l3}})</td></tr>
 	%end
+	<tr><td>Total: </td><td>{{sum([item[1] for item in question_counts])}}</td></tr>
 </table>
 <br />
 <a href="/newquestion"><b>Add Question to the Database</b></a><br />
