@@ -542,6 +542,30 @@ def post_admin_reset_password():
                             sorted_topics = sorted_topics, 
                             errors = errors))
 
+@bottle.post('/admin/delete_user')
+def post_admin_delete_user():
+
+    cookie = bottle.request.get_cookie("session")
+    username = sessions.get_username(cookie)
+    if username is None or ('admin' not in users.get_roles(username)):
+        bottle.redirect("/login")
+    username = bottle.request.forms.get('username')
+
+    topics = set([question['topic'] for question in questions.get_all_questions()])
+    topic_order = preferences.get_preference("topic_order")
+    sorted_topics = [(topic, topic_order.get(topic, 1000)) for topic in topics]
+    sorted_topics.sort(key= lambda item: item[1])
+
+    if users.delete_user(username):
+        errors = "Error deleting user"
+    else:
+        errors = "User successfully deleted"
+    return bottle.template('admin_console', dict(username = username, 
+                            users = users.get_all_users(), 
+                            prefs = preferences.get_master_preferences(),
+                            sorted_topics = sorted_topics, 
+                            errors = errors))
+
 @bottle.post('/admin/sort_order')
 def post_admin_set_sort_order():
 

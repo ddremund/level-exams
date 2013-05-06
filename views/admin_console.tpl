@@ -62,6 +62,17 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 	<input type="submit" value="Change Password" />
 </form>
 <br /><br />
+<b>Delete User:</b>
+<form action="/admin/delete_user" method="POST">
+	Username: 
+	<select name="username">
+		%for user in users:
+		<option value="{{user['_id']}}">{{user['_id']}}</option>
+		%end
+	</select>
+	<input type="submit" value="Delete User" />
+</form>
+<br /><br />
 <b>Topic Sort Order:</b>
 <form action="/admin/sort_order" method="POST">
 	<table>
