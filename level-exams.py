@@ -143,11 +143,12 @@ def get_editquestion(question_id):
 
     topics = set([question['topic'] for question in questions.get_all_questions()])
     question = questions.get_question(question_id)
+    back_link = bottle.request.headers.get("Referer")
 
     return bottle.template('edit_question', dict(username = username, topics = topics, 
         question_id = question['_id'], selected_topic = question['topic'], new_topic = "", errors = "", 
         question = question['question'], answer = question['answer'], levels = question['levels'],
-        image_urls = question['image_urls']))
+        image_urls = question['image_urls'], back_link = back_link))
 
 @bottle.post('/question/<question_id>')
 def post_editquestion(question_id):
@@ -166,19 +167,22 @@ def post_editquestion(question_id):
     levels = bottle.request.forms.getall("level")
     image_urls = bottle.request.forms.get("image_urls").split(", ")
     image_urls = [url for url in image_urls if url != ""]
+    back_link = bottle.request.forms.get("back_link")
 
     roles = users.get_roles(username)
     if 'admin' not in roles and 'question-editor' not in roles:
         errors = "User does not have permission to edit questions."
         return bottle.template("edit_question", dict(username = username, topics = topics, 
             question_id = question_id, selected_topic = topic, new_topic = new_topic, 
-            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
+            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls,
+            back_link = back_link))
 
     if question == "" or answer == "" or topic == "" or len(levels) == 0 or (topic == "new" and new_topic == ""):
         errors = "Question must have question text, answer, topic, and associated levels."
         return bottle.template("edit_question", dict(username = username, topics = topics, 
             question_id = question_id, selected_topic = topic, new_topic = new_topic, 
-            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
+            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls, 
+            back_link = back_link))
 
     escaped_question = question#cgi.escape(question, quote=True)
     escaped_answer = answer#cgi.escape(answer, quote=True)
@@ -199,7 +203,8 @@ def post_editquestion(question_id):
     errors = "Question successfully updated."
     return bottle.template("edit_question", dict(username = username, topics = topics, 
             question_id = question_id, selected_topic = topic, new_topic = new_topic, 
-            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls))
+            errors = errors, question = question, answer = answer, levels = levels, image_urls = image_urls, 
+            back_link = back_link))
 
 @bottle.route('/test/all')
 def create_test_all():

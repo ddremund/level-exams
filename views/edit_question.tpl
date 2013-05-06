@@ -15,7 +15,9 @@ Welcome {{username}}	<a href="/logout">Logout</a>
 <br />{{errors}}
 
 <h1>Edit Question</h1>
+<a href="{{back_link}}">Back to Test</a>
 <form action = "/question/{{question_id}}" method="POST">
+	<input type="hidden" name="back_link" value="{{back_link}}" />
 	<input type="hidden" name="_id" value="question_id" />
 	<h2>Topic</h2>
 	<select name="topic">
