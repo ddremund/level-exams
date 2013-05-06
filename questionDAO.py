@@ -84,7 +84,6 @@ class QuestionDAO:
 
 	def get_questions(self, topic, level, num_questions = 0, dup_ids = []):
 
-		print dup_ids
 		dup_ids = [ObjectId(dup_id) for dup_id in dup_ids]
 		if num_questions == 0:
 			cursor = self.questions.find({"topic": topic, "levels": level})
