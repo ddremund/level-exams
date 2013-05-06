@@ -404,6 +404,7 @@ def create_test(template_id):
         dup_ids = [question["_id"] for question in topic_questions]
         print "Dup IDs:", dup_ids
         level_questions = questions.get_questions(topic, str(int(level) - 1), 0, dup_ids)
+        print [question["_id"] for question in level_questions]
         shuffle(level_questions)
         topic_questions.extend(level_questions[0:int(math.ceil((1 - pct_top / 100.0) * topics[topic]))])
         test_questions[topic] = topic_questions
