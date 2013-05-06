@@ -91,6 +91,18 @@ class UserDAO:
 
         return True
 
+    def remove_user(self, username):
+
+        print "Removing user", username
+
+        try:
+            self.users.remove({'_id:', username})
+        except Exception, e:
+            print 'Error removing user:', e
+            return False
+
+        return True
+
     def change_password(self, username, password):
 
         password_hash = self.make_pw_hash(password)
