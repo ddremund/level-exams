@@ -556,7 +556,7 @@ def post_admin_delete_user():
     sorted_topics = [(topic, topic_order.get(topic, 1000)) for topic in topics]
     sorted_topics.sort(key= lambda item: item[1])
 
-    if users.delete_user(username):
+    if not users.remove_user(username):
         errors = "Error deleting user"
     else:
         errors = "User successfully deleted"
