@@ -754,7 +754,7 @@ def validate_signup(username, password, verify, email, errors):
             return False
     return True
 
-connection_string = "mongodb://localhost"
+connection_string = "mongodb://leveling:qq790235iII@localhost"
 connection = pymongo.MongoClient(connection_string)
 
 database = connection.leveling
