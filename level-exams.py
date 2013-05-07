@@ -404,9 +404,9 @@ def create_test(template_id):
         dup_ids = [question["_id"] for question in topic_questions]
         level_questions = questions.get_questions(topic, str(int(level) - 1), 0, dup_ids)
         shuffle(level_questions)
-        if len(topic_questions) + int(math.floor((1 - pct_top / 100.0) * topics[topic])) - 1 < topics[topic]
+        if len(topic_questions) + int(math.floor((1 - pct_top / 100.0) * topics[topic])) - 1 < topics[topic]:
             topic_questions.extend(level_questions[0:int(math.ceil((1 - pct_top / 100.0) * topics[topic]))])
-        else
+        else:
             topic_questions.extend(level_questions[0:int(math.floor((1 - pct_top / 100.0) * topics[topic]))])
         test_questions[topic] = topic_questions
         test_questions[topic].sort(key= lambda item: min(item['levels']))
