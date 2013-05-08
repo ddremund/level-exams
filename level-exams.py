@@ -218,7 +218,7 @@ def create_test_all():
     roles = users.get_roles(username)
     if 'admin' not in roles and 'test-viewer' not in roles:
         return bottle.template('generic_error', 
-            dict(error = "User does not have permission to generate tests."))
+            dict(error = "User does not have permission to view tests."))
 
     timestamp = str(datetime.datetime.now()).split('.')[0]
     description = "All Questions"
