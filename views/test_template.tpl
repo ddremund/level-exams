@@ -4,6 +4,11 @@
 <html>
 <head>
 <title>Leveling Test: {{description}}</title>
+<style type="text/css">
+    img {
+    max-width: 800px;
+    }
+</style>
 </head>
 <body>
 
