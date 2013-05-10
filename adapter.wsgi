@@ -21,6 +21,6 @@ import bottle
 sys.path = ['/var/www/level-exams/'] + sys.path
 os.chdir(os.path.dirname(__file__))
 
-import level-exams
+import level_exams
 
 application = bottle.default_app()
