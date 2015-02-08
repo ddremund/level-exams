@@ -122,7 +122,7 @@ class UserDAO:
 
     def set_roles(self, username, roles):
 
-        print "updating roles for user " + username " to: ", roles
+        print "updating roles for user " + username + " to: ", roles
         return self.users.update({'_id': username}, {'$set': {'roles': roles}})
 
     def get_all_users(self):
