@@ -127,4 +127,4 @@ class UserDAO:
     def get_all_users(self):
 
         cursor = self.users.find()
-        return list(cursor)
+        return sorted(list(cursor), key = lambda item: item["_id"])
